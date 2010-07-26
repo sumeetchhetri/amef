@@ -1,7 +1,8 @@
 #summary Introduction on AMEF protocol
 
 = Introduction =
-{{{Sometimes there is a need of a compact message exchange protocol, which can represent 
+{{{
+Sometimes there is a need of a compact message exchange protocol, which can represent 
 not only the usual datatypes but also complex object representations. The ISO8583 and the
 ASN.1 protocols solve the problem in these cases providing a standard message exchange 
 protocol.
@@ -20,4 +21,5 @@ Thus to overcome all these limitations i decided to come up with my own implemen
 a new message exchange protocol, which will be simple, compact, totally object oriented 
 and absolutely free to use. 
 
-I have even provided a JAVA implementation of the Encoder-Decoder solution.}}}
+I have even provided a JAVA implementation of the Encoder-Decoder solution.
+}}}
