@@ -28,6 +28,8 @@ where,
                     1 byte length of the date string
                     4 byte length of the AMEFObject encoded byte-stream for an AMEFObject
       AMEF_VALUE = the value of the AMEFObject
+Also the boolean and character types will always contain a character of length 1 and hence
+the length can be ignored in this case.
 
 Thus every AMEF Message will contain a byte-stream of the following format,
 AMEF_HEADER_LENGTH,o,AMEF_NAME,AMEF_LENGTH,AMEF_VALUE
