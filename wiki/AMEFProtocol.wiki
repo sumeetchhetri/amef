@@ -42,6 +42,9 @@ b,,1
 a boolean value of true will be encoded as,
 b,,0
 
+a character value of 'l' and name of "char-value" will be encoded as,
+c,char-value,l
+
 a number value of 2345678 will be encoded as,
 n,,7,2345678
 
