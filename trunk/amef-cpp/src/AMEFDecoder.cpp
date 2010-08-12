@@ -84,8 +84,8 @@ AMEFObject* AMEFDecoder::decodeSinglePacket(string strdata,bool ignoreName)
 			{
 				throw ("Reached end of AMEF string, not found ,");
 			}
-			int lengthm = ((length.at(0) & 0xff000000) << 24) | ((length.at(1) & 0xff0000) << 16)
-							| ((length.at(2) & 0xff00) << 8) | ((length.at(3) & 0xff));
+			int lengthm = ((length.at(0) & 0xff) << 24) | ((length.at(1) & 0xff) << 16)
+							| ((length.at(2) & 0xff) << 8) | ((length.at(3) & 0xff));
 			amefObject->setLength(lengthm);
 			string value = strdata.substr(pos+1,lengthm);
 			amefObject->setValue(value);
@@ -331,8 +331,8 @@ AMEFObject* AMEFDecoder::decodeSinglePacket(string strdata,bool ignoreName)
 			{
 				throw  ("Reached end of AMEF string, not found ,");
 			}
-			int lengthm = ((length.at(0) & 0xff000000) << 24) | ((length.at(1) & 0xff0000) << 16)
-							| ((length.at(2) & 0xff00) << 8) | ((length.at(3) & 0xff));
+			int lengthm = ((length.at(0) & 0xff) << 24) | ((length.at(1) & 0xff) << 16)
+							| ((length.at(2) & 0xff) << 8) | ((length.at(3) & 0xff));
 			amefObject->setLength(lengthm);
 			string value = strdata.substr(pos+1,lengthm);
 			this->tempVal = value;
