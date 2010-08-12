@@ -41,9 +41,10 @@ public class TestAMEFProtocol
 		object2.addPacket("This is the property of a nested Automated Message Exchange Format Object");
 		object2.addPacket(134123);
 		object2.addPacket(false);
+		object2.addPacket('f');
 		object.addPacket(object2);
-		System.out.println(new String(new AMEFEncoder().encode(object)));
-		AMEFObject object1 = new AMEFDecoder().decode(new AMEFEncoder().encode(object),true);
+		System.out.println(new String(new AMEFEncoder().encode(object,true)));
+		AMEFObject object1 = new AMEFDecoder().decode(new AMEFEncoder().encode(object,true),true,true);
 		System.out.println(object1);
 	}
 }
