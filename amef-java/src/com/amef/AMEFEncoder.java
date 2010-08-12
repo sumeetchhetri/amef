@@ -15,7 +15,7 @@
 */
 package com.amef;
 
-
+ 
 /**
  * @author sumeetc
  * The AMEF Encoder Class
