@@ -37,10 +37,10 @@ public class AMEFEncoder
 		String dat = encodeSinglePacket(packet,ignoreName);
 		int l = dat.length();		
 		byte[] buf = new byte[4];
-		buf[0] = (byte)((l & 0xff000000) >> 24);
-		buf[1] = (byte)((l & 0xff0000) >> 16);
-		buf[2] = (byte)((l & 0xff00) >> 8);
-		buf[3] = (byte)(l & 0xff);
+		buf[0] = (byte)((l & 0xff000000) >>> 24);
+		buf[1] = (byte)((l & 0x00ff0000) >>> 16);
+		buf[2] = (byte)((l & 0x0000ff00) >>> 8);
+		buf[3] = (byte)(l & 0x000000ff);
 		return (new String(buf) + dat).getBytes();
 	}	
 	
@@ -79,10 +79,10 @@ public class AMEFEncoder
 		{
 			int l = length;		
 			byte[] buf = new byte[4];
-			buf[0] = (byte)((l & 0xff000000) >> 24);
-			buf[1] = (byte)((l & 0xff0000) >> 16);
-			buf[2] = (byte)((l & 0xff00) >> 8);
-			buf[3] = (byte)(l & 0xff);
+			buf[0] = (byte)((l & 0xff000000) >>> 24);
+			buf[1] = (byte)((l & 0x00ff0000) >>> 16);
+			buf[2] = (byte)((l & 0x0000ff00) >>> 8);
+			buf[3] = (byte)(l & 0x000000ff);
 			retval += new String(buf) + delim + buffer.toString();
 		}
 		else if(packet.getType()==AMEFObject.BOOLEAN_TYPE || packet.getType()==AMEFObject.CHAR_TYPE)

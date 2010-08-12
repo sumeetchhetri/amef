@@ -92,8 +92,8 @@ public class AMEFDecoder
 				{
 					throw new AMEFDecodeException("Reached end of AMEF string, not found ,");
 				}
-				int lengthm = ((length.charAt(0) & 0xff000000) << 24) | ((length.charAt(1) & 0xff0000) << 16)
-								| ((length.charAt(2) & 0xff00) << 8) | ((length.charAt(3) & 0xff));
+				int lengthm = ((length.charAt(0) & 0xff) << 24) | ((length.charAt(1) & 0xff) << 16)
+								| ((length.charAt(2) & 0xff) << 8) | ((length.charAt(3) & 0xff));
 				amefObject.setLength(lengthm);
 				String value = strdata.substring(pos+1,pos+lengthm+1);
 				amefObject.setValue(value);
@@ -334,8 +334,8 @@ public class AMEFDecoder
 				{
 					throw new AMEFDecodeException("Reached end of AMEF string, not found ,");
 				}
-				int lengthm = ((length.charAt(0) & 0xff000000) << 24) | ((length.charAt(1) & 0xff0000) << 16)
-								| ((length.charAt(2) & 0xff00) << 8) | ((length.charAt(3) & 0xff));
+				int lengthm = ((length.charAt(0) & 0xff) << 24) | ((length.charAt(1) & 0xff) << 16)
+								| ((length.charAt(2) & 0xff) << 8) | ((length.charAt(3) & 0xff));
 				amefObject.setLength(lengthm);
 				String value = strdata.substring(pos+1,pos+lengthm+1);
 				tempVal = value;
