@@ -31,9 +31,9 @@ string AMEFEncoder::encode(AMEFObject *packet,bool ignoreName)
 	int l = dat.length();
 	string retval;
 	retval.push_back((char)((l & 0xff000000) >> 24));
-	retval.push_back((char)((l & 0xff0000) >> 16));
-	retval.push_back((char)((l & 0xff00) >> 8));
-	retval.push_back((char)(l & 0xff));
+	retval.push_back((char)((l & 0x00ff0000) >> 16));
+	retval.push_back((char)((l & 0x0000ff00) >> 8));
+	retval.push_back((char)(l & 0x000000ff));
 	retval += dat;
 	return retval;
 }	
@@ -82,9 +82,9 @@ string AMEFEncoder::encodeSinglePacket(AMEFObject *packet,bool ignoreName)
 	{
 		int l = length;		
 		retval.push_back((char)((l & 0xff000000) >> 24));
-		retval.push_back((char)((l & 0xff0000) >> 16));
-		retval.push_back((char)((l & 0xff00) >> 8));
-		retval.push_back((char)(l & 0xff));
+		retval.push_back((char)((l & 0x00ff0000) >> 16));
+		retval.push_back((char)((l & 0x0000ff00) >> 8));
+		retval.push_back((char)(l & 0x000000ff));
 		retval += (delim + buffer);
 	}
 	else if(packet->getType()=='b' || packet->getType()=='c')

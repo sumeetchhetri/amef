@@ -32,7 +32,6 @@ int main()
 	object->addPacket(object2);
 	string str = new AMEFEncoder()->encode(object,false);
 	cout << str << flush;
-	string test = "b,,1,1";
 	AMEFObject *object1 = new AMEFDecoder()->decode(str,true,false);
 	cout << object1->displayObject("") << flush;
 	return 1;
