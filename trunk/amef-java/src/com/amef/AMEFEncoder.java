@@ -32,9 +32,9 @@ public class AMEFEncoder
 	 * @throws AMEFEncodeException
 	 * encode the AMEFObject to the bytestream for wire transmission
 	 */
-	public byte[] encode(AMEFObject packet) throws AMEFEncodeException
+	public byte[] encode(AMEFObject packet,boolean ignoreName) throws AMEFEncodeException
 	{
-		String dat = encodeSinglePacket(packet);
+		String dat = encodeSinglePacket(packet,ignoreName);
 		int l = dat.length();		
 		byte[] buf = new byte[4];
 		buf[0] = (byte)((l & 0xff000000) >> 24);
@@ -50,7 +50,7 @@ public class AMEFEncoder
 	 * @throws AMEFEncodeException
 	 * encode a given AMEF Object to its transmission form
 	 */
-	private String encodeSinglePacket(AMEFObject packet) throws AMEFEncodeException
+	private String encodeSinglePacket(AMEFObject packet,boolean ignoreName) throws AMEFEncodeException
 	{
 		StringBuffer buffer = new StringBuffer();
 		if(packet==null)
@@ -60,7 +60,7 @@ public class AMEFEncoder
 		int length = packet.getLength();
 		for (AMEFObject pack : packet.getPackets())
 		{
-			buffer.append(encodeSinglePacket(pack));
+			buffer.append(encodeSinglePacket(pack,ignoreName));
 		}
 		if(packet.getPackets().size()==0)
 			buffer.append(packet.getValue());
@@ -68,7 +68,9 @@ public class AMEFEncoder
 		{
 			length = buffer.length();			
 		}
-		String retval = packet.getType() + delim + packet.getName() + delim;
+		String retval = packet.getType() + delim;
+		if(!ignoreName)
+			retval +=  packet.getName() + delim;
 		if(packet.getType()==AMEFObject.DATE_TYPE || packet.getType()==AMEFObject.NUMBER_TYPE)
 		{
 			retval += length + delim + buffer.toString();
@@ -85,8 +87,7 @@ public class AMEFEncoder
 		}
 		else if(packet.getType()==AMEFObject.BOOLEAN_TYPE || packet.getType()==AMEFObject.CHAR_TYPE)
 		{
-			length = 1;
-			retval += length + delim + buffer.toString();
+			retval += buffer.toString();
 		}
 		else
 		{

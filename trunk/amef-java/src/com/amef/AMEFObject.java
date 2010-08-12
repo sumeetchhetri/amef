@@ -31,22 +31,22 @@ import java.util.List;
 public class AMEFObject
 {
 	/*The Date type*/
-	protected static final char DATE_TYPE = 'd';
+	public static final char DATE_TYPE = 'd';
 	
 	/*The string type*/
-	protected static final char STRING_TYPE = 's';
+	public static final char STRING_TYPE = 's';
 	
 	/*The boolean type*/
-	protected static final char BOOLEAN_TYPE = 'b';
+	public static final char BOOLEAN_TYPE = 'b';
 	
 	/*The character type*/
-	protected static final char CHAR_TYPE = 'c';
+	public static final char CHAR_TYPE = 'c';
 	
 	/*The Number type*/
-	protected static final char NUMBER_TYPE = 'n';
+	public static final char NUMBER_TYPE = 'n';
 	
 	/*The Object type*/
-	protected static final char OBJECT_TYPE = 'o';
+	public static final char OBJECT_TYPE = 'o';
 	
 	/*The type of the Object can be string, number, date, boolean, character or any complex object*/
 	private char type;
@@ -88,7 +88,7 @@ public class AMEFObject
 	 * @param name
 	 * Add a String property to an Object
 	 */
-	protected void addPacket(String string,String name)
+	public void addPacket(String string,String name)
 	{
 		AMEFObject amefObject = addPacket(string);
 		amefObject.name = name;
@@ -97,7 +97,7 @@ public class AMEFObject
 	 * @param string
 	 * Add a String property to an Object
 	 */
-	protected AMEFObject addPacket(String string)
+	public AMEFObject addPacket(String string)
 	{
 		AMEFObject amefObject = new AMEFObject();
 		amefObject.type = STRING_TYPE;
@@ -113,7 +113,7 @@ public class AMEFObject
 	 * @param name
 	 * Add a boolean property to an Object
 	 */
-	protected void addPacket(boolean bool,String name)
+	public void addPacket(boolean bool,String name)
 	{
 		AMEFObject amefObject = addPacket(bool);
 		amefObject.name = name;
@@ -122,7 +122,7 @@ public class AMEFObject
 	 * @param bool
 	 * Add a boolean property to an Object
 	 */
-	protected AMEFObject addPacket(boolean bool)
+	public AMEFObject addPacket(boolean bool)
 	{
 		AMEFObject amefObject = new AMEFObject();
 		amefObject.type = BOOLEAN_TYPE;
@@ -141,11 +141,36 @@ public class AMEFObject
 	}
 	
 	/**
+	 * @param char
+	 * @param name
+	 * Add a char property to an Object
+	 */
+	public void addPacket(char chr,String name)
+	{
+		AMEFObject amefObject = addPacket(chr);
+		amefObject.name = name;
+	}
+	/**
+	 * @param char
+	 * Add a char property to an Object
+	 */
+	public AMEFObject addPacket(char chr)
+	{
+		AMEFObject amefObject = new AMEFObject();
+		amefObject.type = CHAR_TYPE;
+		amefObject.name = "";
+		amefObject.length = 1;
+		amefObject.value = String.copyValueOf(new char[]{chr});	
+		packets.add(amefObject);
+		return amefObject;
+	}
+	
+	/**
 	 * @param lon
 	 * @param name
 	 * Add a long property to an Object
 	 */
-	protected void addPacket(long lon,String name)
+	public void addPacket(long lon,String name)
 	{
 		AMEFObject amefObject = addPacket(lon);
 		amefObject.name = name;
@@ -154,7 +179,7 @@ public class AMEFObject
 	 * @param lon
 	 * Add a long property to an Object
 	 */
-	protected AMEFObject addPacket(long lon)
+	public AMEFObject addPacket(long lon)
 	{
 		AMEFObject amefObject = new AMEFObject();
 		amefObject.type = NUMBER_TYPE;
@@ -170,7 +195,7 @@ public class AMEFObject
 	 * @param name
 	 * Add a double property to an Object
 	 */
-	protected void addPacket(double doub,String name)
+	public void addPacket(double doub,String name)
 	{
 		AMEFObject amefObject = addPacket(doub);
 		amefObject.name = name;
@@ -179,7 +204,7 @@ public class AMEFObject
 	 * @param doub
 	 * Add a double property to an Object
 	 */
-	protected AMEFObject addPacket(double doub)
+	public AMEFObject addPacket(double doub)
 	{
 		AMEFObject amefObject = new AMEFObject();
 		amefObject.type = NUMBER_TYPE;
@@ -195,7 +220,7 @@ public class AMEFObject
 	 * @param name
 	 * Add an integer property to an Object
 	 */
-	protected void addPacket(int integer,String name)
+	public void addPacket(int integer,String name)
 	{
 		AMEFObject amefObject = addPacket(integer);
 		amefObject.name = name;
@@ -204,7 +229,7 @@ public class AMEFObject
 	 * @param integer
 	 * Add an integer property to an Object
 	 */
-	protected AMEFObject addPacket(int integer)
+	public AMEFObject addPacket(int integer)
 	{
 		AMEFObject amefObject = new AMEFObject();
 		amefObject.type = NUMBER_TYPE;
@@ -220,7 +245,7 @@ public class AMEFObject
 	 * @param name
 	 * Add a Date property to an Object
 	 */
-	protected void addPacket(Date date,String name)
+	public void addPacket(Date date,String name)
 	{
 		AMEFObject amefObject = addPacket(date);
 		amefObject.name = name;
@@ -229,7 +254,7 @@ public class AMEFObject
 	 * @param date
 	 * Add a Date property to an Object
 	 */
-	protected AMEFObject addPacket(Date date)
+	public AMEFObject addPacket(Date date)
 	{
 		AMEFObject amefObject = new AMEFObject();
 		amefObject.type = DATE_TYPE;
@@ -245,53 +270,53 @@ public class AMEFObject
 	 * @param packet
 	 * Add a AMEFObject property to an Object
 	 */
-	protected void addPacket(AMEFObject packet)
+	public void addPacket(AMEFObject packet)
 	{
 		packets.add(packet);
 	}
 	
 	
-	protected int getLength()
+	public int getLength()
 	{
 		return length;
 	}
-	protected void setLength(int length)
+	public void setLength(int length)
 	{
 		this.length = length;
 	}
 	
-	protected String getName()
+	public String getName()
 	{
 		return name;
 	}
-	protected void setName(String name)
+	public void setName(String name)
 	{
 		this.name = name;
 	}
 	
-	protected List<AMEFObject> getPackets()
+	public List<AMEFObject> getPackets()
 	{
 		return packets;
 	}
-	protected void setPackets(List<AMEFObject> packets)
+	public void setPackets(List<AMEFObject> packets)
 	{
 		this.packets = packets;
 	}
 	
-	protected char getType()
+	public char getType()
 	{
 		return type;
 	}
-	protected void setType(char type)
+	public void setType(char type)
 	{
 		this.type = type;
 	}
 	
-	protected String getValue()
+	public String getValue()
 	{
 		return value;
 	}
-	protected void setValue(String value)
+	public void setValue(String value)
 	{
 		this.value = value;
 	}
@@ -300,7 +325,7 @@ public class AMEFObject
 	/**
 	 * @return boolean value of this object if its type is boolean
 	 */
-	protected boolean getBooleanValue()
+	public boolean getBooleanValue()
 	{
 		if(type=='b')
 			return (value=="1"?true:false);
@@ -311,7 +336,7 @@ public class AMEFObject
 	/**
 	 * @return integer value of this object if its type is integer
 	 */
-	protected int getIntValue()
+	public int getIntValue()
 	{
 		if(type=='n')
 			return (Integer.valueOf(value));
@@ -322,7 +347,7 @@ public class AMEFObject
 	/**
 	 * @return double value of this object if its type is double
 	 */
-	protected double getDoubleValue()
+	public double getDoubleValue()
 	{
 		if(type=='n')
 			return (Double.valueOf(value));
@@ -333,7 +358,7 @@ public class AMEFObject
 	/**
 	 * @return long value of this object if its type is long
 	 */
-	protected long getLongValue()
+	public long getLongValue()
 	{
 		if(type=='n')
 			return (Long.valueOf(value));
@@ -344,7 +369,7 @@ public class AMEFObject
 	/**
 	 * @return Date value of this object if its type is Date
 	 */
-	protected Date getDateValue()
+	public Date getDateValue()
 	{
 		if(type=='b') 
 		{
@@ -359,5 +384,36 @@ public class AMEFObject
 		}
 		else
 			return new Date();
+	}
+	
+	/**
+	 * @return String representation of this object
+	 */
+	public String toString()
+	{
+		return displayObject("");
+	}
+	
+	/**
+	 * @return String representation of this object
+	 */
+	private String displayObject(String tab)
+	{
+		String displ = "";
+		for (int i=0;i<(int)getPackets().size();i++)
+		{
+			AMEFObject obj = getPackets().get(i);		
+			displ += tab + "Object Type = ";
+			displ += obj.type;
+			displ += "\n" + tab + "Object Name = " + obj.name + "\n";
+			displ += tab + "Object Length = ";
+			displ += obj.length;
+			displ += "\n" + tab + "Object Value = " + obj.value + "\n";
+			if(obj.type=='o')
+			{
+				displ += obj.displayObject("\t");
+			}
+		}
+		return displ;
 	}
 }

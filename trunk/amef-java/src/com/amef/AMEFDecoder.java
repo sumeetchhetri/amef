@@ -33,14 +33,14 @@ public class AMEFDecoder
 	 * @throws AMEFDecodeException
 	 * decode the bytestream to give the equivalent AMEFObject
 	 */
-	public AMEFObject decode(byte[] data,boolean considerLength) throws AMEFDecodeException
+	public AMEFObject decode(byte[] data,boolean considerLength,boolean ignoreName) throws AMEFDecodeException
 	{
 		int startWith = 0;		
 		if(considerLength)
 			startWith = 4;
 		String strdata = new String(data);
 		strdata = strdata.substring(startWith);
-		AMEFObject amefObject = decodeSinglePacket(strdata);		
+		AMEFObject amefObject = decodeSinglePacket(strdata,ignoreName);		
 		return amefObject;
 	}
 	
@@ -50,7 +50,7 @@ public class AMEFDecoder
 	 * @throws AMEFDecodeException
 	 * decode the string to give the equivalent AMEFObject
 	 */
-	private AMEFObject decodeSinglePacket(String strdata) throws AMEFDecodeException
+	private AMEFObject decodeSinglePacket(String strdata,boolean ignoreName) throws AMEFDecodeException
 	{
 		AMEFObject amefObject = null;
 		char type = strdata.charAt(0);
@@ -62,21 +62,24 @@ public class AMEFDecoder
 				amefObject.setType(type);
 				int pos = 2;
 				String name = "";
-				while(strdata.charAt(pos)!=',')
+				if(!ignoreName)
 				{
-					name += strdata.charAt(pos++);
+					while(strdata.charAt(pos)!=',')
+					{
+						name += strdata.charAt(pos++);
+					}
+					if(name.equals("") && strdata.charAt(2)!=',')
+					{
+						throw new AMEFDecodeException("Invalid character after name specifier, expected ,");
+					}
 				}
-				if(name.equals("") && strdata.charAt(2)!=',')
-				{
-					throw new AMEFDecodeException("Invalid character after name specifier, expected ,");
-				}
-				else if(pos>=strdata.length())
+				if(pos>=strdata.length())
 				{
 					throw new AMEFDecodeException("Reached end of AMEF string, not found ,");
 				}
 				amefObject.setName(name);
 				String length = "";
-				pos++;
+				if(!ignoreName)pos++;
 				while(length.length()<4)
 				{
 					length += strdata.charAt(pos++);
@@ -109,39 +112,39 @@ public class AMEFDecoder
 				amefObject.setType(type);
 				int pos = 2;
 				String name = "";
-				while(strdata.charAt(pos)!=',')
+				if(!ignoreName)
 				{
-					name += strdata.charAt(pos++);
+					while(strdata.charAt(pos)!=',')
+					{
+						name += strdata.charAt(pos++);
+					}
+					if(name.equals("") && strdata.charAt(2)!=',')
+					{
+						throw new AMEFDecodeException("Invalid character after name specifier, expected ,");
+					}
 				}
-				if(name.equals("") && strdata.charAt(2)!=',')
-				{
-					throw new AMEFDecodeException("Invalid character after name specifier, expected ,");
-				}
-				else if(pos>=strdata.length())
+				if(pos>=strdata.length())
 				{
 					throw new AMEFDecodeException("Reached end of AMEF string, not found ,");
 				}
 				amefObject.setName(name);
-				String length = "";
-				pos++;
-				while(strdata.charAt(pos)!=',')
-				{
-					length = "1";
-					pos++;
-				}
-				if(length.equals("") && strdata.charAt(3)!=',')
-				{
-					throw new AMEFDecodeException("Invalid character after length specifier, expected ,");
-				}
-				else if(pos>=strdata.length())
+				if(pos>=strdata.length())
 				{
 					throw new AMEFDecodeException("Reached end of AMEF string, not found ,");
 				}
-				int lengthm = Integer.parseInt(length);
-				amefObject.setLength(lengthm);
-				String value = strdata.substring(pos+1,pos+lengthm+1);
-				amefObject.setValue(value);
-				tempVal = strdata.substring(pos+lengthm+1);
+				amefObject.setLength(1);
+				String value = "";
+				if(!ignoreName)
+				{
+					value = strdata.substring(pos+1,pos+2);
+					tempVal = strdata.substring(pos+2);
+				}
+				else
+				{
+					value = strdata.substring(pos,pos+1);
+					tempVal = strdata.substring(pos+1);
+				}
+				amefObject.setValue(value);				
 			}
 			else
 			{
@@ -156,39 +159,39 @@ public class AMEFDecoder
 				amefObject.setType(type);
 				int pos = 2;
 				String name = "";
-				while(strdata.charAt(pos)!=',')
+				if(!ignoreName)
 				{
-					name += strdata.charAt(pos++);
+					while(strdata.charAt(pos)!=',')
+					{
+						name += strdata.charAt(pos++);
+					}
+					if(name.equals("") && strdata.charAt(2)!=',')
+					{
+						throw new AMEFDecodeException("Invalid character after name specifier, expected ,");
+					}
 				}
-				if(name.equals("") && strdata.charAt(2)!=',')
-				{
-					throw new AMEFDecodeException("Invalid character after name specifier, expected ,");
-				}
-				else if(pos>=strdata.length())
+				if(pos>=strdata.length())
 				{
 					throw new AMEFDecodeException("Reached end of AMEF string, not found ,");
 				}
 				amefObject.setName(name);
-				String length = "";
-				pos++;
-				while(strdata.charAt(pos)!=',')
-				{
-					length = "1";
-					pos++;
-				}
-				if(length.equals("") && strdata.charAt(3)!=',')
-				{
-					throw new AMEFDecodeException("Invalid character after length specifier, expected ,");
-				}
-				else if(pos>=strdata.length())
+				if(pos>=strdata.length())
 				{
 					throw new AMEFDecodeException("Reached end of AMEF string, not found ,");
 				}
-				int lengthm = Integer.parseInt(length);
-				amefObject.setLength(lengthm);
-				String value = strdata.substring(pos+1,pos+lengthm+1);
-				amefObject.setValue(value);
-				tempVal = strdata.substring(pos+lengthm+1);
+				amefObject.setLength(1);
+				String value = "";
+				if(!ignoreName)
+				{
+					value = strdata.substring(pos+1,pos+2);
+					tempVal = strdata.substring(pos+2);
+				}
+				else
+				{
+					value = strdata.substring(pos,pos+1);
+					tempVal = strdata.substring(pos+1);
+				}
+				amefObject.setValue(value);	
 			}
 			else
 			{
@@ -203,21 +206,24 @@ public class AMEFDecoder
 				amefObject.setType(type);
 				int pos = 2;
 				String name = "";
-				while(strdata.charAt(pos)!=',')
+				if(!ignoreName)
 				{
-					name += strdata.charAt(pos++);
+					while(strdata.charAt(pos)!=',')
+					{
+						name += strdata.charAt(pos++);
+					}
+					if(name.equals("") && strdata.charAt(2)!=',')
+					{
+						throw new AMEFDecodeException("Invalid character after name specifier, expected ,");
+					}
 				}
-				if(name.equals("") && strdata.charAt(2)!=',')
-				{
-					throw new AMEFDecodeException("Invalid character after name specifier, expected ,");
-				}
-				else if(pos>=strdata.length())
+				if(pos>=strdata.length())
 				{
 					throw new AMEFDecodeException("Reached end of AMEF string, not found ,");
 				}
 				amefObject.setName(name);
 				String length = "";
-				pos++;
+				if(!ignoreName)pos++;
 				while(strdata.charAt(pos)!=',')
 				{
 					length += strdata.charAt(pos++);
@@ -249,21 +255,24 @@ public class AMEFDecoder
 				amefObject.setType(type);
 				int pos = 2;
 				String name = "";
-				while(strdata.charAt(pos)!=',')
+				if(!ignoreName)
 				{
-					name += strdata.charAt(pos++);
+					while(strdata.charAt(pos)!=',')
+					{
+						name += strdata.charAt(pos++);
+					}
+					if(name.equals("") && strdata.charAt(2)!=',')
+					{
+						throw new AMEFDecodeException("Invalid character after name specifier, expected ,");
+					}
 				}
-				if(name.equals("") && strdata.charAt(2)!=',')
-				{
-					throw new AMEFDecodeException("Invalid character after name specifier, expected ,");
-				}
-				else if(pos>=strdata.length())
+				if(pos>=strdata.length())
 				{
 					throw new AMEFDecodeException("Reached end of AMEF string, not found ,");
 				}
 				amefObject.setName(name);
 				String length = "";
-				pos++;
+				if(!ignoreName)pos++;
 				while(strdata.charAt(pos)!=',')
 				{
 					length += strdata.charAt(pos++);
@@ -295,21 +304,24 @@ public class AMEFDecoder
 				amefObject.setType(type);
 				int pos = 2;
 				String name = "";
-				while(strdata.charAt(pos)!=',')
+				if(!ignoreName)
 				{
-					name += strdata.charAt(pos++);
+					while(strdata.charAt(pos)!=',')
+					{
+						name += strdata.charAt(pos++);
+					}
+					if(name.equals("") && strdata.charAt(2)!=',')
+					{
+						throw new AMEFDecodeException("Invalid character after name specifier, expected ,");
+					}
 				}
-				if(name.equals("") && strdata.charAt(2)!=',')
-				{
-					throw new AMEFDecodeException("Invalid character after name specifier, expected ,");
-				}
-				else if(pos>=strdata.length())
+				if(pos>=strdata.length())
 				{
 					throw new AMEFDecodeException("Reached end of AMEF string, not found ,");
 				}
 				amefObject.setName(name);
 				String length = "";
-				pos++;
+				if(!ignoreName)pos++;
 				while(length.length()<4)
 				{
 					length += strdata.charAt(pos++);
@@ -329,7 +341,7 @@ public class AMEFDecoder
 				tempVal = value;
 				while(!tempVal.equals(""))
 				{
-					AMEFObject obj = decodeSinglePacket(tempVal);
+					AMEFObject obj = decodeSinglePacket(tempVal,ignoreName);
 					amefObject.addPacket(obj);
 				}				
 				tempVal = strdata.substring(pos+lengthm+1);
