@@ -14,24 +14,24 @@
     limitations under the License.
 */
 
-#ifndef JDBRESOURCES_H_
-#define JDBRESOURCES_H_
+#ifndef AMEFRESOURCES_H_
+#define AMEFRESOURCES_H_
 
-#include "JDBEncoder.h"
-#include "JDBDecoder.h"
+#include "AMEFEncoder.h"
+#include "AMEFDecoder.h"
 
 class JdbResources
 {
 	JdbResources()
 	{
-		encoder = new JDBEncoder();
-		decoder = new JDBDecoder();
+		encoder = new AMEFEncoder();
+		decoder = new AMEFDecoder();
 	}
 	static JdbResources *jdbResources;
 
-	JDBEncoder *encoder;
+	AMEFEncoder *encoder;
 
-	JDBDecoder *decoder;
+	AMEFDecoder *decoder;
 
 	static JdbResources* get()
 	{
@@ -43,12 +43,12 @@ class JdbResources
 	}
 	~JdbResources();
 public:
-	static JDBEncoder* getEncoder()
+	static AMEFEncoder* getEncoder()
 	{
 		return get()->encoder;
 	}
 
-	static JDBDecoder* getDecoder()
+	static AMEFDecoder* getDecoder()
 	{
 		return get()->decoder;
 	}
@@ -204,4 +204,4 @@ public:
 
 };
 
-#endif /* JDBRESOURCES_H_ */
+#endif /* AMEFRESOURCES_H_ */

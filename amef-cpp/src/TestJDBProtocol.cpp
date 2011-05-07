@@ -17,7 +17,7 @@
 #include "Timer.h"
 #include "TestJDBProtocol.h"
 #include "Client.h"
-#include "JdbResources.h"
+#include "AMEFResources.h"
 #define BACKLOGM 500
 #define MAXEPOLLSIZE 1000
 #include "map"
@@ -33,65 +33,65 @@ int main1()
 {
 	Client client;
 	client.connection("localhost",7001);
-	JDBEncoder* encoder = new JDBEncoder();
+	AMEFEncoder* encoder = new AMEFEncoder();
 
 	Timer t;
-	JDBObject* query = NULL;
+	AMEFObject* query = NULL;
 	for (int var = 0; var < 500; ++var)
 	{
 		t.start();
-		JDBObject* object = new JDBObject();
-		object->addNullPacket(JDBObject::NULL_STRING);
+		AMEFObject* object = new AMEFObject();
+		object->addNullPacket(AMEFObject::NULL_STRING);
 		object->addPacket("asdasD");
 		object->addPacket(12312321);
 		object->addPacket(true);
 		object->addPacket(1233444555);
 
-		query = new JDBObject();
+		query = new AMEFObject();
 		query->addPacket("insert sent");
 		query->addPacket(encoder->encodeWL(object, true));
 		string dat = encoder->encodeB(query, false);
 		client.sendData(dat);
 		string ret = client.getData();
 		cout << ret << " Insert " << t.elapsedMilliSeconds() << endl;
-		//object->~JDBObject();
-		query->~JDBObject();
+		//object->~AMEFObject();
+		query->~AMEFObject();
 	}
 
 	for (int var = 0; var < 500; ++var)
 	{
 		t.start();
 
-		JDBObject* object = new JDBObject();
+		AMEFObject* object = new AMEFObject();
 		object->addPacket("aaaaaaaaa","1");
 
-		query = new JDBObject();
+		query = new AMEFObject();
 		query->addPacket("update sent 498");
 		query->addPacket(encoder->encodeWL(object, false));
 		string dat = encoder->encodeB(query, false);
 		client.sendData(dat);
 		string ret = client.getData();
 		cout << ret << " Update " << t.elapsedMilliSeconds() << endl;
-		//object->~JDBObject();
-		query->~JDBObject();
+		//object->~AMEFObject();
+		query->~AMEFObject();
 	}
 
 	//sleep(2);
 
 	for (int var = 0; var < 500; ++var)
 	{
-		JDBDecoder decoder;
+		AMEFDecoder decoder;
 		t.start();
-		query = new JDBObject();
+		query = new AMEFObject();
 		query->addPacket("select sent = 498");
 		string dat = encoder->encodeB(query, false);
 		client.sendData(dat);
 		string ret = client.getData();
-		JDBObject* obj = decoder.decodeB(ret.substr(0,ret.length()-1),false,true);
+		AMEFObject* obj = decoder.decodeB(ret.substr(0,ret.length()-1),false,true);
 		cout << "Select " << t.elapsedMilliSeconds() << endl;
-		query->~JDBObject();
+		query->~AMEFObject();
 	}
-	encoder->~JDBEncoder();
+	encoder->~AMEFEncoder();
 	client.closeConnection();
 	return 0;
 }
@@ -188,10 +188,10 @@ void update(string quer,string data)
 	long key = boost::lexical_cast<long>(que[2]);
 	//cout << data.length() <<endl;
 	string odata = (*mapo)[key];
-	JDBDecoder decoder;
-	JDBObject* objn = new JDBObject;
-	JDBObject* obje = decoder.decodeB(data,false,false);
-	JDBObject* objo = decoder.decodeB(odata,false,true);
+	AMEFDecoder decoder;
+	AMEFObject* objn = new AMEFObject;
+	AMEFObject* obje = decoder.decodeB(data,false,false);
+	AMEFObject* objo = decoder.decodeB(odata,false,true);
 	lock.lock();
 	mapo->erase(key);
 	lock.unlock();
@@ -257,7 +257,7 @@ void update(string quer,string data)
 			}
 		}
 	}
-	JDBEncoder encoder;
+	AMEFEncoder encoder;
 	string ndata = encoder.encodeWL(objn, true);
 	lock.lock();
 	mapo->insert(pair<long,string>(key, ndata));
@@ -274,8 +274,8 @@ int main4()
 		cached["sent"] = new map<long,string>;
 		for (int var = 1; var < 10000; ++var) {
 			string dat = "asdasdasdasdasdasdas";
-			JDBObject* object = new JDBObject();
-			object->addNullPacket(JDBObject::NULL_STRING);
+			AMEFObject* object = new AMEFObject();
+			object->addNullPacket(AMEFObject::NULL_STRING);
 			object->addPacket("asdasD");
 			object->addPacket(12312321);
 			object->addPacket(true);
@@ -305,7 +305,7 @@ static void run(int fd)
 		fprintf(stderr, "epoll set insertion error: fd=%d\n", fd);
 		return;
 	}
-	JDBDecoder decoder;
+	AMEFDecoder decoder;
 	char buf[4];
 	while(1)
 	{
@@ -335,7 +335,7 @@ static void run(int fd)
 			//cout << *data << endl;
 			//memset(&buf[0], 0, sizeof(buff));
 			delete[] buff;
-			JDBObject* query = decoder.decodeB(data,false,false);
+			AMEFObject* query = decoder.decodeB(data,false,false);
 			//cout << query << endl;
 			string quer = query->getPackets().at(0)->getValue();
 			if(quer.find("insert ")!=-1 && query->getPackets().size()==2
@@ -477,7 +477,7 @@ static void run(int fd)
 					if(err==0)break;
 				}
 			}
-			//query->~JDBObject();
+			//query->~AMEFObject();
 			//cout << "end=" << query << endl;
 			delete query;
 			usleep(100);
