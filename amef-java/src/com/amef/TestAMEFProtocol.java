@@ -1,5 +1,5 @@
 /*
-	Copyright 2010, Sumeet Chhetri 
+	Copyright 2011, Sumeet Chhetri 
   
     Licensed under the Apache License, Version 2.0 (the "License"); 
     you may not use this file except in compliance with the License. 
@@ -15,6 +15,13 @@
 */
 package com.amef;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.util.Date;
 
 /**
@@ -23,28 +30,101 @@ import java.util.Date;
  */
 public class TestAMEFProtocol
 {
-
+	static class A
+	{
+		A()
+		{
+			System.out.println("A");
+		}
+		A(int i)
+		{
+			System.out.println("Ai");
+		}
+		private void methodA() throws Exception
+		{
+			System.out.println("methodA");
+		}
+	}
+	
+	static class B extends A
+	{
+		B()
+		{
+			System.out.println("B");
+		}
+		B(int i)
+		{
+			System.out.println("Bi");
+		}
+		public final static void methodA() throws IOException
+		{
+			System.out.println("methodB");
+		}
+	}
 	/**
 	 * @param args
 	 * @throws AMEFEncodeException 
 	 * @throws AMEFDecodeException 
 	 * Test the Encode and Decode functions
 	 */
-	public static void main(String[] args) throws AMEFEncodeException, AMEFDecodeException
+	public static void main(String[] args) throws Exception
 	{
 		AMEFObject object = new AMEFObject();
-		object.addPacket("This is the Automated Message Exchange Format Object property!!");
-		object.addPacket(21213);
-		object.addPacket(true);
-		object.addPacket(new Date());
-		AMEFObject object2 = new AMEFObject();
-		object2.addPacket("This is the property of a nested Automated Message Exchange Format Object");
-		object2.addPacket(134123);
-		object2.addPacket(false);
-		object2.addPacket('f');
-		object.addPacket(object2);
-		System.out.println(new String(new AMEFEncoder().encode(object,true)));
-		AMEFObject object1 = new AMEFDecoder().decode(new AMEFEncoder().encode(object,true),true,true);
-		System.out.println(object1);
-	}
+		object.addNullPacket(AMEFObject.NULL_STRING, "");
+		object.addPacket("asdasD");
+		System.out.println(new String(new AMEFEncoder().encodeWL(object, true)));
+		System.out.println(new AMEFDecoder().decodeB(new AMEFEncoder().encodeWL(object, true), false, true));
+		/*object.addPacket("TransactionCode","NOTIFICATION");
+		object.addPacket("OLC","PublisherApplID");
+		object.addPacket("5","PublisherApplThreadID");
+		object.addPacket("2010-06-30T10:23:35","IssueDate");
+		object.addPacket("2010-06-30T10:23:35","EffectiveDate");
+		object.addPacket("300023741","RoutingId");
+		object.addPacket("ACT001","ActionCode");
+		object.addPacket("NO","ActionGroup");
+		object.addPacket("122","PayChannel");
+		object.addPacket("122","SubscriberNo");
+		object.addPacket("510.11.23411.37567","GPPUserLocationInfo");
+		object.addPacket("2010-08-06T10:00:31","ActivationStartTime");	
+		//System.out.println(JDBEncoder.byteArrayToInt(JDBEncoder.intToByteArray(1111, 2).getBytes()));
+		
+		JDBObject object1 = new JDBObject();
+		object1.addPacket("OLC","PublisherApplID");
+		object1.addPacket(1111111111);
+		object1.addPacket(1111111111111111111L);
+		object1.addPacket(11111.12312);
+		object1.addPacket(true);
+		object1.addPacket('a');
+		
+		JDBObject object3 = new JDBObject();
+		object3.addPacket("OLC","PublisherApplID");
+		
+		JDBObject object4 = new JDBObject();
+		object4.addPacket("OLC","PublisherApplID");
+		
+		
+		JDBObject object5 = new JDBObject();
+		object5.addPacket("OLC","PublisherApplID");
+		object4.addPacket(object5);
+		object3.addPacket(object4);
+		//object1.addPacket(object3);
+		object1.addPacket(object3);
+		//object.addPacket(object1);
+		//new JDBEncoder().encodeB(object3,false);
+		//System.out.println(new String(new JDBEncoder().encodeB(object1,false)));
+		System.out.println(new String(new JDBEncoder().encodeB(object1,true)));
+		System.out.println(new String(new JDBEncoder().encodeB(object1,false)).length());
+		System.out.println(object1.getNamedLength(false));
+		//BufferedWriter bw = new BufferedWriter(new FileWriter(new File("temp")));
+		//bw.write(new String(new AMEFEncoder().encode(object,false)));
+		//bw.close();
+		JDBObject object2 = new JDBDecoder().decodeB(new JDBEncoder().encodeB(object1,false),true,false);
+		System.out.println(object2);
+		object2 = new JDBDecoder().decodeB(new JDBEncoder().encodeB(object1,true),true,true);
+		System.out.println(object2);
+		//System.out.println(object2.getPackets().get(1).getIntValue());
+		//System.out.println(object2.getPackets().get(2).getLongValue());
+		//System.out.println(object2.getPackets().get(3).getDoubleValue());
+		//System.out.println(new JDBEncoder().getPacketValue("asdfasdasdasdasdasda"));
+*/	}
 }
