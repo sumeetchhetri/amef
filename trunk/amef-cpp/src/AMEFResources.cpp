@@ -14,15 +14,9 @@
     limitations under the License.
 */
 
-#include "JDBObject.h"
-#include "iostream"
+#include "AMEFResources.h"
 
 
-JDBObject::~JDBObject() {
-	//cout << packets.size() << endl;
-	for (int var = 0; var < (int)packets.size(); var++) {
-		JDBObject *ob = packets.at(var);
-		delete ob;
-	}
-	clear();
+AMEFResources::~AMEFResources() {
+	// TODO Auto-generated destructor stub
 }
