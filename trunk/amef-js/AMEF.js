@@ -227,7 +227,7 @@ var AMEF = {
 			index = 8 + name.length;
 		}
 
-		eval("_o=new "+name+"();");
+		var a = "_o={";
 
 		while(index<o.length)
 		{
@@ -237,7 +237,7 @@ var AMEF = {
 				var name = o.substr(index);	
 				name = name.substr(0,name.indexOf(","));
 				index += name.length + 1;
-				eval("_o."+name+"="+byteArrayToInt(o.substr(index,1))+";");
+				a += "\""+name+"\" : "+byteArrayToInt(o.substr(index,1));
 				index++;
 			}
 			else if(o.substr(index,1)==this.SMALL_INT_TYPE)
@@ -246,7 +246,7 @@ var AMEF = {
 				var name = o.substr(index);	
 				name = name.substr(0,name.indexOf(","));
 				index += name.length + 1;
-				eval("_o."+name+"="+byteArrayToInt(o.substr(index,2))+";");
+				a += "\""+name+"\" : "+byteArrayToInt(o.substr(index,2));
 				index += 2;
 			}
 			else if(o.substr(index,1)==this.BIG_INT_TYPE)
@@ -255,7 +255,7 @@ var AMEF = {
 				var name = o.substr(index);	
 				name = name.substr(0,name.indexOf(","));
 				index += name.length + 1;
-				eval("_o."+name+"="+byteArrayToInt(o.substr(index,3))+";");
+				a += "\""+name+"\" : "+byteArrayToInt(o.substr(index,3));
 				index += 3;
 			}
 			else if(o.substr(index,1)==this.INT_TYPE)
@@ -264,7 +264,7 @@ var AMEF = {
 				var name = o.substr(index);	
 				name = name.substr(0,name.indexOf(","));
 				index += name.length + 1;
-				eval("_o."+name+"="+byteArrayToInt(o.substr(index,4))+";");
+				a += "\""+name+"\" : "+byteArrayToInt(o.substr(index,4));
 				index += 4;
 			}
 			else if(o.substr(index,1)==this.VS_LONG_INT_TYPE)
@@ -273,7 +273,7 @@ var AMEF = {
 				var name = o.substr(index);	
 				name = name.substr(0,name.indexOf(","));
 				index += name.length + 1;
-				eval("_o."+name+"="+byteArrayToInt(o.substr(index,5))+";");
+				a += "\""+name+"\" : "+byteArrayToInt(o.substr(index,5));
 				index += 5;
 			}
 			else if(o.substr(index,1)==this.S_LONG_INT_TYPE)
@@ -282,7 +282,7 @@ var AMEF = {
 				var name = o.substr(index);	
 				name = name.substr(0,name.indexOf(","));
 				index += name.length + 1;
-				eval("_o."+name+"="+byteArrayToInt(o.substr(index,6))+";");
+				a += "\""+name+"\" : "+byteArrayToInt(o.substr(index,6));
 				index += 6;
 			}
 			else if(o.substr(index,1)==this.B_LONG_INT_TYPE)
@@ -291,7 +291,7 @@ var AMEF = {
 				var name = o.substr(index);	
 				name = name.substr(0,name.indexOf(","));
 				index += name.length + 1;
-				eval("_o."+name+"="+byteArrayToInt(o.substr(index,7))+";");
+				a += "\""+name+"\" : "+byteArrayToInt(o.substr(index,7));
 				index += 7;
 			}
 			else if(o.substr(index,1)==this.LONG_INT_TYPE)
@@ -300,7 +300,7 @@ var AMEF = {
 				var name = o.substr(index);	
 				name = name.substr(0,name.indexOf(","));
 				index += name.length + 1;
-				eval("_o."+name+"="+byteArrayToInt(o.substr(index,8))+";");
+				a += "\""+name+"\" : "+byteArrayToInt(o.substr(index,8));
 				index += 8;
 			}
 			else if(o.substr(index,1)==this.STRING_256_TYPE || o.substr(index,1)==this.DOUBLE_FLOAT_TYPE)
@@ -314,8 +314,8 @@ var AMEF = {
 				len = byteArrayToInt(len);
 				index += 2;
 				var valu = o.substr(index,len);
-				if(strtyp)eval("_o."+name+"='"+valu+"';");
-				else eval("_o."+name+"="+valu+";");
+				if(strtyp)a += "\""+name+"\" : '"+valu+"'";
+				else a += "\""+name+"\" : "+valu;
 				index += len;
 			}
 			else if(o.substr(index,1)==this.STRING_65536_TYPE)
@@ -328,7 +328,7 @@ var AMEF = {
 				len = byteArrayToInt(len);
 				index += 3;
 				var valu = o.substr(index,len);
-				eval("_o."+name+"='"+valu+"';");
+				a += "\""+name+"\" : '"+valu+"'";
 				index += len;
 			}
 			else if(o.substr(index,1)==this.STRING_16777216_TYPE)
@@ -341,7 +341,7 @@ var AMEF = {
 				len = byteArrayToInt(len);
 				index += 3;
 				var valu = o.substr(index,len);
-				eval("_o."+name+"='"+valu+"';");
+				a += "\""+name+"\" : '"+valu+"'";
 				index += len;
 			}
 			else if(o.substr(index,1)==this.STRING_TYPE)
@@ -354,7 +354,7 @@ var AMEF = {
 				len = byteArrayToInt(len);
 				index += 4;
 				var valu = o.substr(index,len);
-				eval("_o."+name+"='"+valu+"';");
+				a += "\""+name+"\" : '"+valu+"'";
 				index += len;
 			}
 			else if(o.substr(index,1)==this.BOOLEAN_TYPE)
@@ -363,10 +363,15 @@ var AMEF = {
 				var name = o.substr(index);	
 				name = name.substr(0,name.indexOf(","));
 				index += name.length + 1;
-				eval("_o."+name+"="+(o.substr(index,1)=="1"?true:false)+";");
+				a += "\""+name+"\" : "+(o.substr(index,1)=="1"?true:false);
 				index++;
 			}
+			a += ",";
 		}
+		if(a.charAt(a.length-1)==",")
+			a = a.substr(0,a.length-1);
+		a + "};";
+		eval(a);
 		return _o;
 	}
 };
