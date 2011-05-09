@@ -55,7 +55,7 @@ var AMEF = {
 	/*The Object type*/
 	OBJECT_TYPE : 'o',
 	
-	_numToByteArrayWI : function numToByteArrayWI(l) 
+	this._numToByteArrayWI : function _numToByteArrayWI(l) 
 	{
 		var ind = 1;
 		if(l<256)
@@ -83,7 +83,7 @@ var AMEF = {
 		return result;
 	},
 
-	_byteArrayToInt : function byteArrayToInt(l) 
+	this._byteArrayToInt : function this._byteArrayToInt(l) 
 	{
 		var t = 0;
 		var ind = l.length;
@@ -106,13 +106,13 @@ var AMEF = {
 				if(t && typeof t == "object"){ 
 					var temp = encode(t);
 					if(temp.length+1<256)
-						a += this.VS_OBJECT_TYPE + "," + p + "," + numToByteArrayWI(temp.length) + "," + temp;
+						a += this.VS_OBJECT_TYPE + "," + p + "," + this._numToByteArrayWI(temp.length) + "," + temp;
 					else if(temp.length+1<65536)
-						a += this.S_OBJECT_TYPE + "," + p + "," + numToByteArrayWI(temp.length) + "," + temp;
+						a += this.S_OBJECT_TYPE + "," + p + "," + this._numToByteArrayWI(temp.length) + "," + temp;
 					else if(temp.length+1<16777216)
-						a += this.B_OBJECT_TYPE + "," + p + "," + numToByteArrayWI(temp.length) + "," + temp;
+						a += this.B_OBJECT_TYPE + "," + p + "," + this._numToByteArrayWI(temp.length) + "," + temp;
 					else
-						a += this.OBJECT_TYPE + "," + p + "," + numToByteArrayWI(temp.length) + "," + temp;                 
+						a += this.OBJECT_TYPE + "," + p + "," + this._numToByteArrayWI(temp.length) + "," + temp;                 
 				}
 				else if(typeof t == "boolean"){
 					a += this.BOOLEAN_TYPE + "," + p + "," + (t?"1":"0");
@@ -121,61 +121,61 @@ var AMEF = {
 					var temp  = "";
 					if(t.length<=256)
 					{
-						temp += this.STRING_256_TYPE + "," + p + "," + numToByteArrayWI(t.length) + "," + t;
+						temp += this.STRING_256_TYPE + "," + p + "," + this._numToByteArrayWI(t.length) + "," + t;
 					}
 					else if(t.length<=65536)
 					{
-						temp += this.STRING_65536_TYPE + "," + p + "," + numToByteArrayWI(t.length) + "," + t;
+						temp += this.STRING_65536_TYPE + "," + p + "," + this._numToByteArrayWI(t.length) + "," + t;
 					}
 					else if(t.length<=16777216)
 					{
-						temp += this.STRING_16777216_TYPE + "," + p + "," + numToByteArrayWI(t.length) + "," + t;
+						temp += this.STRING_16777216_TYPE + "," + p + "," + this._numToByteArrayWI(t.length) + "," + t;
 					}
 					else
 					{
-						temp += this.STRING_TYPE + "," + p + "," + numToByteArrayWI(t.length) + "," + t;
+						temp += this.STRING_TYPE + "," + p + "," + this._numToByteArrayWI(t.length) + "," + t;
 					}
 					a += temp;
 				}
 				else if(typeof t == "number"){
 					if((t+"").indexOf(".")!=-1)
 					{
-						a += this.DOUBLE_FLOAT_TYPE + "," + p + "," + numToByteArrayWI((t+"").length) + "," + t;
+						a += this.DOUBLE_FLOAT_TYPE + "," + p + "," + this._numToByteArrayWI((t+"").length) + "," + t;
 					}
 					else
 					{
 						var temp  = "";
 						if(t<256)
 						{
-							temp += this.VERY_SMALL_INT_TYPE + "," + p + "," + numToByteArrayWI(t);
+							temp += this.VERY_SMALL_INT_TYPE + "," + p + "," + this._numToByteArrayWI(t);
 						}
 						else if(t<65536)
 						{
-							temp += this.SMALL_INT_TYPE + "," + p + "," + numToByteArrayWI(t);
+							temp += this.SMALL_INT_TYPE + "," + p + "," + this._numToByteArrayWI(t);
 						}
 						else if(t<16777216)
 						{
-							temp += this.BIG_INT_TYPE + "," + p + "," + numToByteArrayWI(t);
+							temp += this.BIG_INT_TYPE + "," + p + "," + this._numToByteArrayWI(t);
 						}
 						else if(t<4294967296)
 						{
-							temp += this.INT_TYPE + "," + p + "," + numToByteArrayWI(t);
+							temp += this.INT_TYPE + "," + p + "," + this._numToByteArrayWI(t);
 						}
 						else if(t<1099511627776)
 						{
-							temp += this.VS_LONG_INT_TYPE + "," + p + "," + numToByteArrayWI(t);
+							temp += this.VS_LONG_INT_TYPE + "," + p + "," + this._numToByteArrayWI(t);
 						}
 						else if(t<281474976710656)
 						{
-							temp += this.S_LONG_INT_TYPE + "," + p + "," + numToByteArrayWI(t);
+							temp += this.S_LONG_INT_TYPE + "," + p + "," + this._numToByteArrayWI(t);
 						}
 						else if(t<72057594037927936)
 						{
-							temp += this.B_LONG_INT_TYPE + "," + p + "," + numToByteArrayWI(t);
+							temp += this.B_LONG_INT_TYPE + "," + p + "," + this._numToByteArrayWI(t);
 						}
 						else
 						{
-							temp += this.LONG_INT_TYPE + "," + p + "," + numToByteArrayWI(t);
+							temp += this.LONG_INT_TYPE + "," + p + "," + this._numToByteArrayWI(t);
 						}
 						a += temp;
 					}
@@ -184,13 +184,13 @@ var AMEF = {
 		}
 		var p = /(\w+)\(/.exec(_o.constructor.toString())[1];;
 		if(a.length+1<256)
-			a = this.VS_OBJECT_TYPE + "," + p + "," + numToByteArrayWI(a.length) + "," + a;
+			a = this.VS_OBJECT_TYPE + "," + p + "," + this._numToByteArrayWI(a.length) + "," + a;
 		else if(a.length+1<65536)
-			a = this.S_OBJECT_TYPE + "," + p + "," + numToByteArrayWI(a.length) + "," + a;
+			a = this.S_OBJECT_TYPE + "," + p + "," + this._numToByteArrayWI(a.length) + "," + a;
 		else if(a.length+1<16777216)
-			a = this.B_OBJECT_TYPE + "," + p + "," + numToByteArrayWI(a.length) + "," + a;
+			a = this.B_OBJECT_TYPE + "," + p + "," + this._numToByteArrayWI(a.length) + "," + a;
 		else
-			a = this.OBJECT_TYPE + "," + p + "," + numToByteArrayWI(a.length) + "," + a;
+			a = this.OBJECT_TYPE + "," + p + "," + this._numToByteArrayWI(a.length) + "," + a;
 		return a;
 	},
 	
@@ -237,7 +237,7 @@ var AMEF = {
 				var name = o.substr(index);	
 				name = name.substr(0,name.indexOf(","));
 				index += name.length + 1;
-				a += "\""+name+"\" : "+byteArrayToInt(o.substr(index,1));
+				a += "\""+name+"\" : "+this._byteArrayToInt(o.substr(index,1));
 				index++;
 			}
 			else if(o.substr(index,1)==this.SMALL_INT_TYPE)
@@ -246,7 +246,7 @@ var AMEF = {
 				var name = o.substr(index);	
 				name = name.substr(0,name.indexOf(","));
 				index += name.length + 1;
-				a += "\""+name+"\" : "+byteArrayToInt(o.substr(index,2));
+				a += "\""+name+"\" : "+this._byteArrayToInt(o.substr(index,2));
 				index += 2;
 			}
 			else if(o.substr(index,1)==this.BIG_INT_TYPE)
@@ -255,7 +255,7 @@ var AMEF = {
 				var name = o.substr(index);	
 				name = name.substr(0,name.indexOf(","));
 				index += name.length + 1;
-				a += "\""+name+"\" : "+byteArrayToInt(o.substr(index,3));
+				a += "\""+name+"\" : "+this._byteArrayToInt(o.substr(index,3));
 				index += 3;
 			}
 			else if(o.substr(index,1)==this.INT_TYPE)
@@ -264,7 +264,7 @@ var AMEF = {
 				var name = o.substr(index);	
 				name = name.substr(0,name.indexOf(","));
 				index += name.length + 1;
-				a += "\""+name+"\" : "+byteArrayToInt(o.substr(index,4));
+				a += "\""+name+"\" : "+this._byteArrayToInt(o.substr(index,4));
 				index += 4;
 			}
 			else if(o.substr(index,1)==this.VS_LONG_INT_TYPE)
@@ -273,7 +273,7 @@ var AMEF = {
 				var name = o.substr(index);	
 				name = name.substr(0,name.indexOf(","));
 				index += name.length + 1;
-				a += "\""+name+"\" : "+byteArrayToInt(o.substr(index,5));
+				a += "\""+name+"\" : "+this._byteArrayToInt(o.substr(index,5));
 				index += 5;
 			}
 			else if(o.substr(index,1)==this.S_LONG_INT_TYPE)
@@ -282,7 +282,7 @@ var AMEF = {
 				var name = o.substr(index);	
 				name = name.substr(0,name.indexOf(","));
 				index += name.length + 1;
-				a += "\""+name+"\" : "+byteArrayToInt(o.substr(index,6));
+				a += "\""+name+"\" : "+this._byteArrayToInt(o.substr(index,6));
 				index += 6;
 			}
 			else if(o.substr(index,1)==this.B_LONG_INT_TYPE)
@@ -291,7 +291,7 @@ var AMEF = {
 				var name = o.substr(index);	
 				name = name.substr(0,name.indexOf(","));
 				index += name.length + 1;
-				a += "\""+name+"\" : "+byteArrayToInt(o.substr(index,7));
+				a += "\""+name+"\" : "+this._byteArrayToInt(o.substr(index,7));
 				index += 7;
 			}
 			else if(o.substr(index,1)==this.LONG_INT_TYPE)
@@ -300,7 +300,7 @@ var AMEF = {
 				var name = o.substr(index);	
 				name = name.substr(0,name.indexOf(","));
 				index += name.length + 1;
-				a += "\""+name+"\" : "+byteArrayToInt(o.substr(index,8));
+				a += "\""+name+"\" : "+this._byteArrayToInt(o.substr(index,8));
 				index += 8;
 			}
 			else if(o.substr(index,1)==this.STRING_256_TYPE || o.substr(index,1)==this.DOUBLE_FLOAT_TYPE)
@@ -311,7 +311,7 @@ var AMEF = {
 				name = name.substr(0,name.indexOf(","));
 				index += name.length + 1;
 				var len = o.substr(index,1);	
-				len = byteArrayToInt(len);
+				len = this._byteArrayToInt(len);
 				index += 2;
 				var valu = o.substr(index,len);
 				if(strtyp)a += "\""+name+"\" : '"+valu+"'";
@@ -325,7 +325,7 @@ var AMEF = {
 				name = name.substr(0,name.indexOf(","));
 				index += name.length + 1;
 				var len = o.substr(index,2);	
-				len = byteArrayToInt(len);
+				len = this._byteArrayToInt(len);
 				index += 3;
 				var valu = o.substr(index,len);
 				a += "\""+name+"\" : '"+valu+"'";
@@ -338,7 +338,7 @@ var AMEF = {
 				name = name.substr(0,name.indexOf(","));
 				index += name.length + 1;
 				var len = o.substr(index,3);	
-				len = byteArrayToInt(len);
+				len = this._byteArrayToInt(len);
 				index += 3;
 				var valu = o.substr(index,len);
 				a += "\""+name+"\" : '"+valu+"'";
@@ -351,7 +351,7 @@ var AMEF = {
 				name = name.substr(0,name.indexOf(","));
 				index += name.length + 1;
 				var len = o.substr(index,4);	
-				len = byteArrayToInt(len);
+				len = this._byteArrayToInt(len);
 				index += 4;
 				var valu = o.substr(index,len);
 				a += "\""+name+"\" : '"+valu+"'";
@@ -370,7 +370,7 @@ var AMEF = {
 		}
 		if(a.charAt(a.length-1)==",")
 			a = a.substr(0,a.length-1);
-		a + "};";
+		a += "};";
 		eval(a);
 		return _o;
 	}
