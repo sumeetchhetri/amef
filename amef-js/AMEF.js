@@ -55,7 +55,7 @@ var AMEF = {
 	/*The Object type*/
 	OBJECT_TYPE : 'o',
 	
-	this._numToByteArrayWI : function _numToByteArrayWI(l) 
+	_numToByteArrayWI : function _numToByteArrayWI(l) 
 	{
 		var ind = 1;
 		if(l<256)
@@ -83,7 +83,7 @@ var AMEF = {
 		return result;
 	},
 
-	this._byteArrayToInt : function this._byteArrayToInt(l) 
+	_byteArrayToInt : function _byteArrayToInt(l) 
 	{
 		var t = 0;
 		var ind = l.length;
@@ -106,13 +106,13 @@ var AMEF = {
 				if(t && typeof t == "object"){ 
 					var temp = encode(t);
 					if(temp.length+1<256)
-						a += this.VS_OBJECT_TYPE + "," + p + "," + this._numToByteArrayWI(temp.length) + "," + temp;
+						a += this.VS_OBJECT_TYPE + "," + p + "," + this._numToByteArrayWI(temp.length) + temp;
 					else if(temp.length+1<65536)
-						a += this.S_OBJECT_TYPE + "," + p + "," + this._numToByteArrayWI(temp.length) + "," + temp;
+						a += this.S_OBJECT_TYPE + "," + p + "," + this._numToByteArrayWI(temp.length) + temp;
 					else if(temp.length+1<16777216)
-						a += this.B_OBJECT_TYPE + "," + p + "," + this._numToByteArrayWI(temp.length) + "," + temp;
+						a += this.B_OBJECT_TYPE + "," + p + "," + this._numToByteArrayWI(temp.length) + temp;
 					else
-						a += this.OBJECT_TYPE + "," + p + "," + this._numToByteArrayWI(temp.length) + "," + temp;                 
+						a += this.OBJECT_TYPE + "," + p + "," + this._numToByteArrayWI(temp.length) + temp;                 
 				}
 				else if(typeof t == "boolean"){
 					a += this.BOOLEAN_TYPE + "," + p + "," + (t?"1":"0");
@@ -121,26 +121,26 @@ var AMEF = {
 					var temp  = "";
 					if(t.length<=256)
 					{
-						temp += this.STRING_256_TYPE + "," + p + "," + this._numToByteArrayWI(t.length) + "," + t;
+						temp += this.STRING_256_TYPE + "," + p + "," + this._numToByteArrayWI(t.length) + t;
 					}
 					else if(t.length<=65536)
 					{
-						temp += this.STRING_65536_TYPE + "," + p + "," + this._numToByteArrayWI(t.length) + "," + t;
+						temp += this.STRING_65536_TYPE + "," + p + "," + this._numToByteArrayWI(t.length) + t;
 					}
 					else if(t.length<=16777216)
 					{
-						temp += this.STRING_16777216_TYPE + "," + p + "," + this._numToByteArrayWI(t.length) + "," + t;
+						temp += this.STRING_16777216_TYPE + "," + p + "," + this._numToByteArrayWI(t.length) + t;
 					}
 					else
 					{
-						temp += this.STRING_TYPE + "," + p + "," + this._numToByteArrayWI(t.length) + "," + t;
+						temp += this.STRING_TYPE + "," + p + "," + this._numToByteArrayWI(t.length) + t;
 					}
 					a += temp;
 				}
 				else if(typeof t == "number"){
 					if((t+"").indexOf(".")!=-1)
 					{
-						a += this.DOUBLE_FLOAT_TYPE + "," + p + "," + this._numToByteArrayWI((t+"").length) + "," + t;
+						a += this.DOUBLE_FLOAT_TYPE + "," + p + "," + this._numToByteArrayWI((t+"").length) + t;
 					}
 					else
 					{
@@ -182,15 +182,15 @@ var AMEF = {
 				}
 			}
 		}
-		var p = /(\w+)\(/.exec(_o.constructor.toString())[1];;
+		var p = /(\w+)\(/.exec(_o.constructor.toString())[1];
 		if(a.length+1<256)
-			a = this.VS_OBJECT_TYPE + "," + p + "," + this._numToByteArrayWI(a.length) + "," + a;
+			a = this.VS_OBJECT_TYPE + "," + p + "," + this._numToByteArrayWI(a.length) + a;
 		else if(a.length+1<65536)
-			a = this.S_OBJECT_TYPE + "," + p + "," + this._numToByteArrayWI(a.length) + "," + a;
+			a = this.S_OBJECT_TYPE + "," + p + "," + this._numToByteArrayWI(a.length) + a;
 		else if(a.length+1<16777216)
-			a = this.B_OBJECT_TYPE + "," + p + "," + this._numToByteArrayWI(a.length) + "," + a;
+			a = this.B_OBJECT_TYPE + "," + p + "," + this._numToByteArrayWI(a.length) + a;
 		else
-			a = this.OBJECT_TYPE + "," + p + "," + this._numToByteArrayWI(a.length) + "," + a;
+			a = this.OBJECT_TYPE + "," + p + "," + this._numToByteArrayWI(a.length) + a;
 		return a;
 	},
 	
@@ -198,33 +198,33 @@ var AMEF = {
 	{ 
 		var a = "", t; 
 		
-		var name = "";
+		var naam = "";
 
 		var index = 0;
 
 		if(o.substr(0,1)==this.VS_OBJECT_TYPE)
 		{
-			name = o.substr(2);
-			name = name.substr(0,name.indexOf(","));
-			index = 5 + name.length;
+			naam = o.substr(2);
+			naam = naam.substr(0,naam.indexOf(","));
+			index = 4 + naam.length;
 		}
 		else if(o.substr(0,1)==this.S_OBJECT_TYPE)
 		{
-			name = o.substr(2);
-			name = name.substr(0,name.indexOf(","));
-			index = 6 + name.length;
+			naam = o.substr(2);
+			naam = naam.substr(0,naam.indexOf(","));
+			index = 5 + naam.length;
 		}
 		else if(o.substr(0,1)==this.B_OBJECT_TYPE)
 		{
-			name = o.substr(2);
-			name = name.substr(0,name.indexOf(","));
-			index = 7 + name.length;
+			naam = o.substr(2);
+			naam = naam.substr(0,naam.indexOf(","));
+			index = 6 + naam.length;
 		}
 		else if(o.substr(0,1)==this.OBJECT_TYPE)
 		{
-			name = o.substr(2);
-			name = name.substr(0,name.indexOf(","));
-			index = 8 + name.length;
+			naam = o.substr(2);
+			naam = naam.substr(0,naam.indexOf(","));
+			index = 7 + naam.length;
 		}
 
 		var a = "_o={";
@@ -234,136 +234,136 @@ var AMEF = {
 			if(o.substr(index,1)==this.VERY_SMALL_INT_TYPE)
 			{
 				index += 2;
-				var name = o.substr(index);	
-				name = name.substr(0,name.indexOf(","));
-				index += name.length + 1;
-				a += "\""+name+"\" : "+this._byteArrayToInt(o.substr(index,1));
+				var naam = o.substr(index);	
+				naam = naam.substr(0,naam.indexOf(","));
+				index += naam.length + 1;
+				a += "\""+naam+"\" : "+this._byteArrayToInt(o.substr(index,1));
 				index++;
 			}
 			else if(o.substr(index,1)==this.SMALL_INT_TYPE)
 			{
 				index += 2;
-				var name = o.substr(index);	
-				name = name.substr(0,name.indexOf(","));
-				index += name.length + 1;
-				a += "\""+name+"\" : "+this._byteArrayToInt(o.substr(index,2));
+				var naam = o.substr(index);	
+				naam = naam.substr(0,naam.indexOf(","));
+				index += naam.length + 1;
+				a += "\""+naam+"\" : "+this._byteArrayToInt(o.substr(index,2));
 				index += 2;
 			}
 			else if(o.substr(index,1)==this.BIG_INT_TYPE)
 			{
 				index += 2;
-				var name = o.substr(index);	
-				name = name.substr(0,name.indexOf(","));
-				index += name.length + 1;
-				a += "\""+name+"\" : "+this._byteArrayToInt(o.substr(index,3));
+				var naam = o.substr(index);	
+				naam = naam.substr(0,naam.indexOf(","));
+				index += naam.length + 1;
+				a += "\""+naam+"\" : "+this._byteArrayToInt(o.substr(index,3));
 				index += 3;
 			}
 			else if(o.substr(index,1)==this.INT_TYPE)
 			{
 				index += 2;
-				var name = o.substr(index);	
-				name = name.substr(0,name.indexOf(","));
-				index += name.length + 1;
-				a += "\""+name+"\" : "+this._byteArrayToInt(o.substr(index,4));
+				var naam = o.substr(index);	
+				naam = naam.substr(0,naam.indexOf(","));
+				index += naam.length + 1;
+				a += "\""+naam+"\" : "+this._byteArrayToInt(o.substr(index,4));
 				index += 4;
 			}
 			else if(o.substr(index,1)==this.VS_LONG_INT_TYPE)
 			{
 				index += 2;
-				var name = o.substr(index);	
-				name = name.substr(0,name.indexOf(","));
-				index += name.length + 1;
-				a += "\""+name+"\" : "+this._byteArrayToInt(o.substr(index,5));
+				var naam = o.substr(index);	
+				naam = naam.substr(0,naam.indexOf(","));
+				index += naam.length + 1;
+				a += "\""+naam+"\" : "+this._byteArrayToInt(o.substr(index,5));
 				index += 5;
 			}
 			else if(o.substr(index,1)==this.S_LONG_INT_TYPE)
 			{
 				index += 2;
-				var name = o.substr(index);	
-				name = name.substr(0,name.indexOf(","));
-				index += name.length + 1;
-				a += "\""+name+"\" : "+this._byteArrayToInt(o.substr(index,6));
+				var naam = o.substr(index);	
+				naam = naam.substr(0,naam.indexOf(","));
+				index += naam.length + 1;
+				a += "\""+naam+"\" : "+this._byteArrayToInt(o.substr(index,6));
 				index += 6;
 			}
 			else if(o.substr(index,1)==this.B_LONG_INT_TYPE)
 			{
 				index += 2;
-				var name = o.substr(index);	
-				name = name.substr(0,name.indexOf(","));
-				index += name.length + 1;
-				a += "\""+name+"\" : "+this._byteArrayToInt(o.substr(index,7));
+				var naam = o.substr(index);this._byteArrayToInt(o.substr(index,1))	
+				naam = naam.substr(0,naam.indexOf(","));
+				index += naam.length + 1;
+				a += "\""+naam+"\" : "+this._byteArrayToInt(o.substr(index,7));
 				index += 7;
 			}
 			else if(o.substr(index,1)==this.LONG_INT_TYPE)
 			{
 				index += 2;
-				var name = o.substr(index);	
-				name = name.substr(0,name.indexOf(","));
-				index += name.length + 1;
-				a += "\""+name+"\" : "+this._byteArrayToInt(o.substr(index,8));
+				var naam = o.substr(index);	
+				naam = naam.substr(0,naam.indexOf(","));
+				index += naam.length + 1;
+				a += "\""+naam+"\" : "+this._byteArrayToInt(o.substr(index,8));
 				index += 8;
 			}
 			else if(o.substr(index,1)==this.STRING_256_TYPE || o.substr(index,1)==this.DOUBLE_FLOAT_TYPE)
 			{
 				var strtyp = (o.substr(index,1)==this.DOUBLE_FLOAT_TYPE)?false:true;
 				index += 2;
-				var name = o.substr(index);	
-				name = name.substr(0,name.indexOf(","));
-				index += name.length + 1;
+				var naam = o.substr(index);	
+				naam = naam.substr(0,naam.indexOf(","));
+				index += naam.length + 1;
 				var len = o.substr(index,1);	
 				len = this._byteArrayToInt(len);
-				index += 2;
+				index += 1;
 				var valu = o.substr(index,len);
-				if(strtyp)a += "\""+name+"\" : '"+valu+"'";
-				else a += "\""+name+"\" : "+valu;
+				if(strtyp)a += "\""+naam+"\" : '"+valu+"'";
+				else a += "\""+naam+"\" : "+valu;
 				index += len;
 			}
 			else if(o.substr(index,1)==this.STRING_65536_TYPE)
 			{
 				index += 2;
-				var name = o.substr(index);	
-				name = name.substr(0,name.indexOf(","));
-				index += name.length + 1;
+				var naam = o.substr(index);	
+				naam = naam.substr(0,naam.indexOf(","));
+				index += naam.length + 1;
 				var len = o.substr(index,2);	
 				len = this._byteArrayToInt(len);
-				index += 3;
+				index += 2;
 				var valu = o.substr(index,len);
-				a += "\""+name+"\" : '"+valu+"'";
+				a += "\""+naam+"\" : '"+valu+"'";
 				index += len;
 			}
 			else if(o.substr(index,1)==this.STRING_16777216_TYPE)
 			{
 				index += 2;
-				var name = o.substr(index);	
-				name = name.substr(0,name.indexOf(","));
-				index += name.length + 1;
+				var naam = o.substr(index);	
+				naam = naam.substr(0,naam.indexOf(","));
+				index += naam.length + 1;
 				var len = o.substr(index,3);	
 				len = this._byteArrayToInt(len);
 				index += 3;
 				var valu = o.substr(index,len);
-				a += "\""+name+"\" : '"+valu+"'";
+				a += "\""+naam+"\" : '"+valu+"'";
 				index += len;
 			}
 			else if(o.substr(index,1)==this.STRING_TYPE)
 			{
 				index += 2;
-				var name = o.substr(index);	
-				name = name.substr(0,name.indexOf(","));
-				index += name.length + 1;
+				var naam = o.substr(index);	
+				naam = naam.substr(0,naam.indexOf(","));
+				index += naam.length + 1;
 				var len = o.substr(index,4);	
 				len = this._byteArrayToInt(len);
 				index += 4;
 				var valu = o.substr(index,len);
-				a += "\""+name+"\" : '"+valu+"'";
+				a += "\""+naam+"\" : '"+valu+"'";
 				index += len;
 			}
 			else if(o.substr(index,1)==this.BOOLEAN_TYPE)
 			{
 				index += 2;
-				var name = o.substr(index);	
-				name = name.substr(0,name.indexOf(","));
-				index += name.length + 1;
-				a += "\""+name+"\" : "+(o.substr(index,1)=="1"?true:false);
+				var naam = o.substr(index);	
+				naam = naam.substr(0,naam.indexOf(","));
+				index += naam.length + 1;
+				a += "\""+naam+"\" : "+(o.substr(index,1)=="1"?true:false);
 				index++;
 			}
 			a += ",";
@@ -376,6 +376,8 @@ var AMEF = {
 	}
 };
 
-var val = AMEF.encode(new Test());alert(val);
+var val = AMEF.encode(new Test());
+alert(val);
 var t = AMEF.decode(val);
-val = AMEF.encode(t);alert(val);
+val = AMEF.encode(t);
+alert(val);
