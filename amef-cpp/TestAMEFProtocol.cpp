@@ -16,7 +16,7 @@
 #include "AMEFDecoder.h"
 #include "AMEFEncoder.h"
 #include <iostream>
-int main()
+int maintest()
 {
 	AMEFObject *object = new AMEFObject();
 	string h = "This is the Automated Message Exchange Format Object property!!";
@@ -30,9 +30,11 @@ int main()
 	object2->addPacket(false);
 	object2->addPacket('d');
 	object->addPacket(object2);
-	string str = new AMEFEncoder()->encode(object,false);
+	AMEFEncoder encoder;
+	string str = encoder.encodeB(object,false);
 	cout << str << flush;
-	AMEFObject *object1 = new AMEFDecoder()->decode(str,true,false);
+	AMEFDecoder decoder;
+	AMEFObject *object1 = decoder.decodeB(str,true,false);
 	cout << object1->displayObject("") << flush;
 	return 1;
 }
