@@ -1,4 +1,3 @@
-package com.amef;
 /*
 	Copyright 2011, Sumeet Chhetri 
   
@@ -14,13 +13,15 @@ package com.amef;
     See the License for the specific language governing permissions and 
     limitations under the License.  
 */
+package com.amef;
 
+import com.amef.AMEFResources;
 
 
 /**
  * @author sumeetc
  * The AMEF Encoder Class
- * provides the encode method to encode the AMEFObject
+ * provides the encode method to encode the JDBObject
  */
 public final class AMEFEncoder
 {
@@ -31,9 +32,9 @@ public final class AMEFEncoder
 	 * @param packet
 	 * @return byte[]
 	 * @throws AMEFEncodeException
-	 * encode the AMEFObject to the bytestream for wire transmission
+	 * encode the JDBObject to the bytestream for wire transmission
 	 */
-	/*public byte[] encode(AMEFObject packet,boolean ignoreName) throws AMEFEncodeException
+	/*public byte[] encode(JDBObject packet,boolean ignoreName) throws AMEFEncodeException
 	{
 		String dat = encodeSinglePacket(packet,ignoreName);
 		int l = dat.length();		
@@ -58,7 +59,7 @@ public final class AMEFEncoder
 		return enc;
 	}
 	
-	/*public byte[] encodeWL(AMEFObject packet,boolean ignoreName) throws AMEFEncodeException
+	/*public byte[] encodeWL(JDBObject packet,boolean ignoreName) throws AMEFEncodeException
 	{
 		String dat = encodeSinglePacket(packet,ignoreName);
 		int l = dat.length();		
@@ -69,20 +70,20 @@ public final class AMEFEncoder
 	 * @param packet
 	 * @return byte[]
 	 * @throws AMEFEncodeException
-	 * encode the AMEFObject to the bytestream for wire transmission
+	 * encode the JDBObject to the bytestream for wire transmission
 	 *//*
-	public String encodeS(AMEFObject packet,boolean ignoreName) throws AMEFEncodeException
+	public String encodeS(JDBObject packet,boolean ignoreName) throws AMEFEncodeException
 	{
 		String dat = null;
 		if(ignoreName)
-			dat = encodeAMEFObject(packet);
+			dat = encodeJDBObject(packet);
 		else
 			dat = encodeSinglePacket(packet,ignoreName);
 		int l = dat.length();		
 		return (AMEFResources.intToByteArrayS(l, 4) + dat);
 	}
 	
-	public String encodeAMEFObject(AMEFObject packet) throws AMEFEncodeException
+	public String encodeJDBObject(JDBObject packet) throws AMEFEncodeException
 	{
 		String dat = encodeSingleJDBPacket(packet);
 		int l = dat.length();		
@@ -102,48 +103,48 @@ public final class AMEFEncoder
 	
 	private void getValue(String value,char type,StringBuilder buffer)
 	{
-		/*if(type==AMEFObject.DATE_TYPE || type==AMEFObject.STRING_65536_TYPE
-					|| type==AMEFObject.STRING_256_TYPE || type==AMEFObject.DOUBLE_FLOAT_TYPE
-					|| type==AMEFObject.STRING_16777216_TYPE || type==AMEFObject.STRING_TYPE
-					|| type==AMEFObject.BOOLEAN_TYPE || type==AMEFObject.CHAR_TYPE)
+		/*if(type==JDBObject.DATE_TYPE || type==JDBObject.STRING_65536_TYPE
+					|| type==JDBObject.STRING_256_TYPE || type==JDBObject.DOUBLE_FLOAT_TYPE
+					|| type==JDBObject.STRING_16777216_TYPE || type==JDBObject.STRING_TYPE
+					|| type==JDBObject.BOOLEAN_TYPE || type==JDBObject.CHAR_TYPE)
 		{
 			buffer.append(value);
 		}
-		else if(type==AMEFObject.VERY_SMALL_INT_TYPE)
+		else if(type==JDBObject.VERY_SMALL_INT_TYPE)
 		{
 			buffer.append(value);
 		}
-		else if(type==AMEFObject.SMALL_INT_TYPE)
+		else if(type==JDBObject.SMALL_INT_TYPE)
 		{
 			int intvalue = Integer.parseInt(value);
 			buffer.append(AMEFResources.intToByteArray(intvalue, 2));
 		}
-		else if(type==AMEFObject.BIG_INT_TYPE)
+		else if(type==JDBObject.BIG_INT_TYPE)
 		{
 			int intvalue = Integer.parseInt(value);
 			buffer.append(new String(AMEFResources.intToByteArray(intvalue, 3)));
 		}
-		else if(type==AMEFObject.INT_TYPE)
+		else if(type==JDBObject.INT_TYPE)
 		{
 			int intvalue = Integer.parseInt(value);	
 			buffer.append(new String(AMEFResources.intToByteArray(intvalue, 4)));
 		}
-		else if(type==AMEFObject.VS_LONG_INT_TYPE)
+		else if(type==JDBObject.VS_LONG_INT_TYPE)
 		{
 			long l = Long.parseLong(value);	
 			buffer.append(new String(AMEFResources.longToByteArray(l, 5)));
 		}
-		else if(type==AMEFObject.S_LONG_INT_TYPE)
+		else if(type==JDBObject.S_LONG_INT_TYPE)
 		{
 			long l = Long.parseLong(value);		
 			buffer.append(new String(AMEFResources.longToByteArray(l, 6)));
 		}
-		else if(type==AMEFObject.B_LONG_INT_TYPE)
+		else if(type==JDBObject.B_LONG_INT_TYPE)
 		{
 			long l = Long.parseLong(value);	
 			buffer.append(new String(AMEFResources.longToByteArray(l, 7)));
 		}
-		else if(type==AMEFObject.LONG_INT_TYPE)
+		else if(type==JDBObject.LONG_INT_TYPE)
 		{
 			long l = Long.parseLong(value);			
 			buffer.append(new String(AMEFResources.longToByteArray(l, 8)));
@@ -217,7 +218,7 @@ public final class AMEFEncoder
 		return retval;
 	}
 	
-	/*private String encodeSingleJDBPacket(AMEFObject packet) throws AMEFEncodeException
+	/*private String encodeSingleJDBPacket(JDBObject packet) throws AMEFEncodeException
 	{
 		StringBuilder buffer = new StringBuilder();
 		if(packet==null)
@@ -225,7 +226,7 @@ public final class AMEFEncoder
 			throw new AMEFEncodeException("Objcet to be encoded is null");
 		}
 		int length = packet.getLength();
-		for (AMEFObject pack : packet.getPackets())
+		for (JDBObject pack : packet.getPackets())
 		{
 			buffer.append(encodeSingleJDBPacket(pack));
 		}
@@ -244,7 +245,7 @@ public final class AMEFEncoder
 	 * @throws AMEFEncodeException
 	 * encode a given AMEF Object to its transmission form
 	 *//*
-	private String encodeSinglePacket(AMEFObject packet,boolean ignoreName) throws AMEFEncodeException
+	private String encodeSinglePacket(JDBObject packet,boolean ignoreName) throws AMEFEncodeException
 	{
 		StringBuilder buffer = new StringBuilder();
 		if(packet==null)
@@ -252,7 +253,7 @@ public final class AMEFEncoder
 			throw new AMEFEncodeException("Objcet to be encoded is null");
 		}
 		int length = packet.getLength();
-		for (AMEFObject pack : packet.getPackets())
+		for (JDBObject pack : packet.getPackets())
 		{
 			buffer.append(encodeSinglePacket(pack,ignoreName));
 		}
@@ -269,7 +270,7 @@ public final class AMEFEncoder
 	}
 	
 	
-	private byte[] encodeSinglePacketB(AMEFObject packet,boolean ignoreName) throws AMEFEncodeException
+	private byte[] encodeSinglePacketB(JDBObject packet,boolean ignoreName) throws AMEFEncodeException
 	{		
 		ByteArrayOutputStream buffer = new ByteArrayOutputStream();
 		if(packet==null)
@@ -277,7 +278,7 @@ public final class AMEFEncoder
 			throw new AMEFEncodeException("Objcet to be encoded is null");
 		}
 		int length = packet.getLength();
-		for (AMEFObject pack : packet.getPackets())
+		for (JDBObject pack : packet.getPackets())
 		{
 			buffer.write(encodeSinglePacketB(pack,ignoreName));
 		}
@@ -289,48 +290,48 @@ public final class AMEFEncoder
 		if(!ignoreName)
 			retval +=  packet.getName();
 		char type = packet.getType();
-		if(type==AMEFObject.DATE_TYPE || type==AMEFObject.STRING_256_TYPE 
-				|| type==AMEFObject.DOUBLE_FLOAT_TYPE)
+		if(type==JDBObject.DATE_TYPE || type==JDBObject.STRING_256_TYPE 
+				|| type==JDBObject.DOUBLE_FLOAT_TYPE)
 		{
 			buffer.write(AMEFResources.intToByteArray(length, 1));
 		}
-		else if(type==AMEFObject.STRING_65536_TYPE)
+		else if(type==JDBObject.STRING_65536_TYPE)
 		{
 			buffer.write(AMEFResources.intToByteArray(length, 2));
 		}
-		else if(type==AMEFObject.STRING_16777216_TYPE)
+		else if(type==JDBObject.STRING_16777216_TYPE)
 		{
 			buffer.write(AMEFResources.intToByteArray(length, 3));
 		}
-		else if(type==AMEFObject.STRING_TYPE)
+		else if(type==JDBObject.STRING_TYPE)
 		{
 			buffer.write(AMEFResources.intToByteArray(length, 4));
 		}
-		else if(type==AMEFObject.BOOLEAN_TYPE || type==AMEFObject.CHAR_TYPE 
-				|| type==AMEFObject.SMALL_INT_TYPE || type==AMEFObject.VERY_SMALL_INT_TYPE 
-				|| type==AMEFObject.BIG_INT_TYPE || type==AMEFObject.INT_TYPE 
-				|| type==AMEFObject.VS_LONG_INT_TYPE || type==AMEFObject.S_LONG_INT_TYPE
-				|| type==AMEFObject.B_LONG_INT_TYPE || type==AMEFObject.LONG_INT_TYPE)
+		else if(type==JDBObject.BOOLEAN_TYPE || type==JDBObject.CHAR_TYPE 
+				|| type==JDBObject.SMALL_INT_TYPE || type==JDBObject.VERY_SMALL_INT_TYPE 
+				|| type==JDBObject.BIG_INT_TYPE || type==JDBObject.INT_TYPE 
+				|| type==JDBObject.VS_LONG_INT_TYPE || type==JDBObject.S_LONG_INT_TYPE
+				|| type==JDBObject.B_LONG_INT_TYPE || type==JDBObject.LONG_INT_TYPE)
 		{
 			retval += buffer.toString();
 		}
-		else if(type==AMEFObject.OBJECT_TYPE)
+		else if(type==JDBObject.OBJECT_TYPE)
 		{
 			if(length<256)
 			{
-				retval = AMEFObject.VS_OBJECT_TYPE + delim + name + delim + AMEFResources.intToByteArrayS(length, 1) + buffer.toString();
+				retval = JDBObject.VS_OBJECT_TYPE + delim + name + delim + AMEFResources.intToByteArrayS(length, 1) + buffer.toString();
 			}
 			else if(length<65536)
 			{
-				retval = AMEFObject.S_OBJECT_TYPE + delim + name + delim + AMEFResources.intToByteArrayS(length, 2) + buffer.toString();
+				retval = JDBObject.S_OBJECT_TYPE + delim + name + delim + AMEFResources.intToByteArrayS(length, 2) + buffer.toString();
 			}
 			else if(length<16777216)
 			{
-				retval = AMEFObject.B_OBJECT_TYPE + delim + name + delim + AMEFResources.intToByteArrayS(length, 3) + buffer.toString();
+				retval = JDBObject.B_OBJECT_TYPE + delim + name + delim + AMEFResources.intToByteArrayS(length, 3) + buffer.toString();
 			}
 			else
 			{
-				retval = AMEFObject.OBJECT_TYPE + delim + name + delim + AMEFResources.intToByteArrayS(length, 4) + buffer.toString();
+				retval = JDBObject.OBJECT_TYPE + delim + name + delim + AMEFResources.intToByteArrayS(length, 4) + buffer.toString();
 			}
 		}
 		return getFinalVal(packet.getType(), buffer, length, delim, retval);
@@ -540,15 +541,15 @@ public final class AMEFEncoder
 		{
 			if(packet.getType()==AMEFObject.OBJECT_TYPE)
 			{
-				if(buffer.length+4<256)
+				if(buffer.length<256)
 				{
 					buffer[0] = AMEFObject.VS_OBJECT_TYPE;
 				}
-				else if(buffer.length+4<65536)
+				else if(buffer.length<65536)
 				{
 					buffer[0] = AMEFObject.S_OBJECT_TYPE;
 				}
-				else if(buffer.length+4<16777216)
+				else if(buffer.length<16777216)
 				{
 					buffer[0] = AMEFObject.B_OBJECT_TYPE;
 				}
@@ -567,7 +568,7 @@ public final class AMEFEncoder
 				&& packet.getType()!=AMEFObject.NULL_CHAR && packet.getType()!=AMEFObject.NULL_DATE && packet.getType()!=AMEFObject.NULL_FPN
 				&& packet.getType()!=AMEFObject.NULL_NUMBER)
 			{
-				byte[] lengthb = AMEFResources.intToByteArrayWI(packet.getlength());
+				byte[] lengthb = AMEFResources.intToByteArrayWI(packet.isObject()?packet.getNamedLength():packet.getLength());
 				System.arraycopy(lengthb, 0, buffer, pos, lengthb.length);
 				pos += lengthb.length;
 			}			
@@ -588,6 +589,10 @@ public final class AMEFEncoder
 				pos += lengthb.length;
 			}	
 		}
+		if(packet==null)
+		{
+			throw new AMEFEncodeException("Objcet to be encoded is null");
+		}
 		for (AMEFObject pack : packet.getPackets())
 		{
 			byte[] val = encodeSinglePacketB(pack,ignoreName);
@@ -602,4 +607,6 @@ public final class AMEFEncoder
 		}
 		return buffer;
 	}
+	
+	
 }
