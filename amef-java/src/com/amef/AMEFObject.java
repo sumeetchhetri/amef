@@ -30,7 +30,7 @@ import com.amef.AMEFResources;
  * The Automated Message Exchange Format Object type
  * Is a wrapper for basic as well as complex object heirarchies
  * can be a string, number, date, boolean, character or any complex object
- * Every message consists of only one JDBObjectNew *
+ * Every message consists of only one AMEFObjectNew *
  */
 public final class AMEFObject implements Serializable
 {
@@ -123,7 +123,7 @@ public final class AMEFObject implements Serializable
 	private List<AMEFObject> packets;
 	
 	/**
-	 * @return Array of JDBObjectNew	 
+	 * @return Array of AMEFObjectNew	 
 	 *  
 	 */
 	
@@ -165,23 +165,23 @@ public final class AMEFObject implements Serializable
 	
 	public AMEFObject addNullPacket(char type)
 	{
-		AMEFObject JDBObjectNew = new AMEFObject();
-		JDBObjectNew.namedLength = 1;
+		AMEFObject AMEFObjectNew = new AMEFObject();
+		AMEFObjectNew.namedLength = 1;
 		length += 1;
 		namedLength += 1;
-		JDBObjectNew.type = type;
-		JDBObjectNew.length = 1;
-		packets.add(JDBObjectNew);
-		return JDBObjectNew;
+		AMEFObjectNew.type = type;
+		AMEFObjectNew.length = 1;
+		packets.add(AMEFObjectNew);
+		return AMEFObjectNew;
 	}
 	
 	public void addNullPacket(char type,String name)
 	{
-		AMEFObject JDBObjectNew = addNullPacket(type);
-		JDBObjectNew.name = name;
+		AMEFObject AMEFObjectNew = addNullPacket(type);
+		AMEFObjectNew.name = name;
 		//length += name.length();
 		namedLength += name.length();
-		JDBObjectNew.namedLength += name.length();
+		AMEFObjectNew.namedLength += name.length();
 	}
 	
 	/**
@@ -191,11 +191,11 @@ public final class AMEFObject implements Serializable
 	 */
 	public void addPacket(String string,String name)
 	{
-		AMEFObject JDBObjectNew = addPacket(string);
-		JDBObjectNew.name = name;
+		AMEFObject AMEFObjectNew = addPacket(string);
+		AMEFObjectNew.name = name;
 		//length += name.length();
 		namedLength += name.length();
-		JDBObjectNew.namedLength += name.length();
+		AMEFObjectNew.namedLength += name.length();
 	}
 	/**
 	 * @param string
@@ -203,42 +203,42 @@ public final class AMEFObject implements Serializable
 	 */
 	public AMEFObject addPacket(String string)
 	{
-		AMEFObject JDBObjectNew = new AMEFObject();		
-		JDBObjectNew.name = "";
-		JDBObjectNew.value = string.getBytes();
-		JDBObjectNew.length = JDBObjectNew.value.length;		
+		AMEFObject AMEFObjectNew = new AMEFObject();		
+		AMEFObjectNew.name = "";
+		AMEFObjectNew.value = string.getBytes();
+		AMEFObjectNew.length = AMEFObjectNew.value.length;		
 		
 		if(string.length()<256)
 		{
-			JDBObjectNew.type = STRING_256_TYPE;
-			length += JDBObjectNew.length + 2;
-			namedLength += JDBObjectNew.length + 4;
-			JDBObjectNew.namedLength = JDBObjectNew.length + 2;
+			AMEFObjectNew.type = STRING_256_TYPE;
+			length += AMEFObjectNew.length + 2;
+			namedLength += AMEFObjectNew.length + 4;
+			AMEFObjectNew.namedLength = AMEFObjectNew.length + 2;
 		}
 		else if(string.length()<65536)
 		{
-			JDBObjectNew.type = STRING_65536_TYPE;
-			length += JDBObjectNew.length + 3;
-			namedLength += JDBObjectNew.length + 5;
-			JDBObjectNew.namedLength = JDBObjectNew.length + 3;
+			AMEFObjectNew.type = STRING_65536_TYPE;
+			length += AMEFObjectNew.length + 3;
+			namedLength += AMEFObjectNew.length + 5;
+			AMEFObjectNew.namedLength = AMEFObjectNew.length + 3;
 		}
 		else if(string.length()<16777216)
 		{
-			JDBObjectNew.type = STRING_16777216_TYPE;
-			length += JDBObjectNew.length + 4;
-			namedLength += JDBObjectNew.length + 6;
-			JDBObjectNew.namedLength = JDBObjectNew.length + 4;
+			AMEFObjectNew.type = STRING_16777216_TYPE;
+			length += AMEFObjectNew.length + 4;
+			namedLength += AMEFObjectNew.length + 6;
+			AMEFObjectNew.namedLength = AMEFObjectNew.length + 4;
 		}
 		else
 		{
-			JDBObjectNew.type = STRING_TYPE;
-			length += JDBObjectNew.length + 5;
-			namedLength += JDBObjectNew.length + 7;
-			JDBObjectNew.namedLength = JDBObjectNew.length + 5;
+			AMEFObjectNew.type = STRING_TYPE;
+			length += AMEFObjectNew.length + 5;
+			namedLength += AMEFObjectNew.length + 7;
+			AMEFObjectNew.namedLength = AMEFObjectNew.length + 5;
 		}
 		
-		packets.add(JDBObjectNew);
-		return JDBObjectNew;
+		packets.add(AMEFObjectNew);
+		return AMEFObjectNew;
 	}
 	
 	/**
@@ -248,11 +248,11 @@ public final class AMEFObject implements Serializable
 	 */
 	public void addPacket(byte[] string,String name)
 	{
-		AMEFObject JDBObjectNew = addPacket(string);
-		JDBObjectNew.name = name;
+		AMEFObject AMEFObjectNew = addPacket(string);
+		AMEFObjectNew.name = name;
 		//length += name.length();
 		namedLength += name.length();
-		JDBObjectNew.namedLength += name.length();
+		AMEFObjectNew.namedLength += name.length();
 	}
 	/**
 	 * @param string
@@ -260,42 +260,42 @@ public final class AMEFObject implements Serializable
 	 */
 	public AMEFObject addPacket(byte[] string)
 	{
-		AMEFObject JDBObjectNew = new AMEFObject();		
-		JDBObjectNew.name = "";			
-		JDBObjectNew.value = string;
-		JDBObjectNew.length = JDBObjectNew.value.length;	
+		AMEFObject AMEFObjectNew = new AMEFObject();		
+		AMEFObjectNew.name = "";			
+		AMEFObjectNew.value = string;
+		AMEFObjectNew.length = AMEFObjectNew.value.length;	
 		
 		if(string.length<256)
 		{
-			JDBObjectNew.type = STRING_256_TYPE;
-			length += JDBObjectNew.length + 2;
-			namedLength += JDBObjectNew.length + 4;
-			JDBObjectNew.namedLength = JDBObjectNew.length + 2;
+			AMEFObjectNew.type = STRING_256_TYPE;
+			length += AMEFObjectNew.length + 2;
+			namedLength += AMEFObjectNew.length + 4;
+			AMEFObjectNew.namedLength = AMEFObjectNew.length + 2;
 		}
 		else if(string.length<65536)
 		{
-			JDBObjectNew.type = STRING_65536_TYPE;
-			length += JDBObjectNew.length + 3;
-			namedLength += JDBObjectNew.length + 5;
-			JDBObjectNew.namedLength = JDBObjectNew.length + 3;
+			AMEFObjectNew.type = STRING_65536_TYPE;
+			length += AMEFObjectNew.length + 3;
+			namedLength += AMEFObjectNew.length + 5;
+			AMEFObjectNew.namedLength = AMEFObjectNew.length + 3;
 		}
 		else if(string.length<16777216)
 		{
-			JDBObjectNew.type = STRING_16777216_TYPE;
-			length += JDBObjectNew.length + 4;
-			namedLength += JDBObjectNew.length + 6;
-			JDBObjectNew.namedLength = JDBObjectNew.length + 4;
+			AMEFObjectNew.type = STRING_16777216_TYPE;
+			length += AMEFObjectNew.length + 4;
+			namedLength += AMEFObjectNew.length + 6;
+			AMEFObjectNew.namedLength = AMEFObjectNew.length + 4;
 		}
 		else
 		{
-			JDBObjectNew.type = STRING_TYPE;
-			length += JDBObjectNew.length + 5;
-			namedLength += JDBObjectNew.length + 7;
-			JDBObjectNew.namedLength = JDBObjectNew.length + 5;
+			AMEFObjectNew.type = STRING_TYPE;
+			length += AMEFObjectNew.length + 5;
+			namedLength += AMEFObjectNew.length + 7;
+			AMEFObjectNew.namedLength = AMEFObjectNew.length + 5;
 		}
 		
-		packets.add(JDBObjectNew);
-		return JDBObjectNew;
+		packets.add(AMEFObjectNew);
+		return AMEFObjectNew;
 	}
 	
 	/**
@@ -305,11 +305,11 @@ public final class AMEFObject implements Serializable
 	 */
 	public void addPacket(boolean bool,String name)
 	{
-		AMEFObject JDBObjectNew = addPacket(bool);
-		JDBObjectNew.name = name;
+		AMEFObject AMEFObjectNew = addPacket(bool);
+		AMEFObjectNew.name = name;
 		//length += name.length();
 		namedLength += name.length();
-		JDBObjectNew.namedLength += name.length();
+		AMEFObjectNew.namedLength += name.length();
 	}
 	/**
 	 * @param bool
@@ -317,32 +317,32 @@ public final class AMEFObject implements Serializable
 	 */
 	public AMEFObject addPacket(boolean bool)
 	{
-		AMEFObject JDBObjectNew = new AMEFObject();
-		JDBObjectNew.type = BOOLEAN_TYPE;
-		JDBObjectNew.name = "";
-		JDBObjectNew.length = 1;
+		AMEFObject AMEFObjectNew = new AMEFObject();
+		AMEFObjectNew.type = BOOLEAN_TYPE;
+		AMEFObjectNew.name = "";
+		AMEFObjectNew.length = 1;
 		if(bool==true)
 		{			
-			JDBObjectNew.value = new byte[]{'1'};
+			AMEFObjectNew.value = new byte[]{'1'};
 		}
 		else
 		{
-			JDBObjectNew.value = new byte[]{'0'};		
+			AMEFObjectNew.value = new byte[]{'0'};		
 		}		
-		packets.add(JDBObjectNew);
+		packets.add(AMEFObjectNew);
 		length += 2;
 		namedLength += 4;
-		JDBObjectNew.namedLength = 2;
-		return JDBObjectNew;
+		AMEFObjectNew.namedLength = 2;
+		return AMEFObjectNew;
 	}
 	
 	public void addPacket(char chr,String name)
 	{
-		AMEFObject JDBObjectNew = addPacket(chr);
-		JDBObjectNew.name = name;
+		AMEFObject AMEFObjectNew = addPacket(chr);
+		AMEFObjectNew.name = name;
 		//length += name.length();
 		namedLength += name.length();
-		JDBObjectNew.namedLength += name.length();
+		AMEFObjectNew.namedLength += name.length();
 	}
 	/**
 	 * @param bool
@@ -350,16 +350,16 @@ public final class AMEFObject implements Serializable
 	 */
 	public AMEFObject addPacket(char chr)
 	{
-		AMEFObject JDBObjectNew = new AMEFObject();
-		JDBObjectNew.type = CHAR_TYPE;
-		JDBObjectNew.name = "";
-		JDBObjectNew.length = 1;
-		JDBObjectNew.value = new byte[]{(byte)chr};	
-		packets.add(JDBObjectNew);
+		AMEFObject AMEFObjectNew = new AMEFObject();
+		AMEFObjectNew.type = CHAR_TYPE;
+		AMEFObjectNew.name = "";
+		AMEFObjectNew.length = 1;
+		AMEFObjectNew.value = new byte[]{(byte)chr};	
+		packets.add(AMEFObjectNew);
 		length += 2;
 		namedLength += 4;
-		JDBObjectNew.namedLength = 2;
-		return JDBObjectNew;
+		AMEFObjectNew.namedLength = 2;
+		return AMEFObjectNew;
 	}
 	
 	/**
@@ -369,11 +369,11 @@ public final class AMEFObject implements Serializable
 	 */
 	public void addPacket(long lon,String name)
 	{
-		AMEFObject JDBObjectNew = addPacket(lon);
-		JDBObjectNew.name = name;
+		AMEFObject AMEFObjectNew = addPacket(lon);
+		AMEFObjectNew.name = name;
 		//length += name.length();
 		namedLength += name.length();
-		JDBObjectNew.namedLength += name.length();
+		AMEFObjectNew.namedLength += name.length();
 	}
 	/**
 	 * @param lon
@@ -381,82 +381,82 @@ public final class AMEFObject implements Serializable
 	 */
 	public AMEFObject addPacket(long lon)
 	{
-		AMEFObject JDBObjectNew = new AMEFObject();
+		AMEFObject AMEFObjectNew = new AMEFObject();
 		if(lon<256)
 		{
-			JDBObjectNew.type = VERY_SMALL_INT_TYPE;
-			JDBObjectNew.value = AMEFResources.longToByteArray(lon, 1);
+			AMEFObjectNew.type = VERY_SMALL_INT_TYPE;
+			AMEFObjectNew.value = AMEFResources.longToByteArray(lon, 1);
 			length += 2;
 			namedLength += 4;
-			JDBObjectNew.namedLength  = 2;
-			JDBObjectNew.length = 1;
+			AMEFObjectNew.namedLength  = 2;
+			AMEFObjectNew.length = 1;
 		}
 		else if(lon<65536)
 		{
-			JDBObjectNew.type = SMALL_INT_TYPE;
-			JDBObjectNew.value = AMEFResources.longToByteArray(lon, 2);
+			AMEFObjectNew.type = SMALL_INT_TYPE;
+			AMEFObjectNew.value = AMEFResources.longToByteArray(lon, 2);
 			length += 3;
 			namedLength += 5;
-			JDBObjectNew.namedLength  = 3;
-			JDBObjectNew.length = 2;
+			AMEFObjectNew.namedLength  = 3;
+			AMEFObjectNew.length = 2;
 		}
 		else if(lon<16777216)
 		{
-			JDBObjectNew.type = BIG_INT_TYPE;
-			JDBObjectNew.value = AMEFResources.longToByteArray(lon, 3);
+			AMEFObjectNew.type = BIG_INT_TYPE;
+			AMEFObjectNew.value = AMEFResources.longToByteArray(lon, 3);
 			length += 4;
 			namedLength += 6;
-			JDBObjectNew.namedLength  = 4;
-			JDBObjectNew.length = 3;
+			AMEFObjectNew.namedLength  = 4;
+			AMEFObjectNew.length = 3;
 		}
 		else if(lon<4294967296L)
 		{
-			JDBObjectNew.type = INT_TYPE;
-			JDBObjectNew.value = AMEFResources.longToByteArray(lon, 4);
+			AMEFObjectNew.type = INT_TYPE;
+			AMEFObjectNew.value = AMEFResources.longToByteArray(lon, 4);
 			length += 5;
 			namedLength += 7;
-			JDBObjectNew.namedLength  = 5;
-			JDBObjectNew.length = 4;
+			AMEFObjectNew.namedLength  = 5;
+			AMEFObjectNew.length = 4;
 		}
 		else if(lon<1099511627776L)
 		{
-			JDBObjectNew.type = VS_LONG_INT_TYPE;
-			JDBObjectNew.value = AMEFResources.longToByteArray(lon, 5);
+			AMEFObjectNew.type = VS_LONG_INT_TYPE;
+			AMEFObjectNew.value = AMEFResources.longToByteArray(lon, 5);
 			length += 6;
 			namedLength += 8;
-			JDBObjectNew.namedLength  = 6;
-			JDBObjectNew.length = 5;
+			AMEFObjectNew.namedLength  = 6;
+			AMEFObjectNew.length = 5;
 		}
 		else if(lon<281474976710656L)
 		{
-			JDBObjectNew.type = S_LONG_INT_TYPE;
-			JDBObjectNew.value = AMEFResources.longToByteArray(lon, 6);
+			AMEFObjectNew.type = S_LONG_INT_TYPE;
+			AMEFObjectNew.value = AMEFResources.longToByteArray(lon, 6);
 			length += 7;
 			namedLength += 9;
-			JDBObjectNew.namedLength  = 7;
-			JDBObjectNew.length = 6;
+			AMEFObjectNew.namedLength  = 7;
+			AMEFObjectNew.length = 6;
 		}
 		else if(lon<72057594037927936L)
 		{
-			JDBObjectNew.type = B_LONG_INT_TYPE;
-			JDBObjectNew.value = AMEFResources.longToByteArray(lon, 7);
+			AMEFObjectNew.type = B_LONG_INT_TYPE;
+			AMEFObjectNew.value = AMEFResources.longToByteArray(lon, 7);
 			length += 8;
 			namedLength += 10;
-			JDBObjectNew.namedLength  = 8;
-			JDBObjectNew.length = 7;
+			AMEFObjectNew.namedLength  = 8;
+			AMEFObjectNew.length = 7;
 		}
 		else
 		{
-			JDBObjectNew.type = LONG_INT_TYPE;
-			JDBObjectNew.value = AMEFResources.longToByteArray(lon, 8);
+			AMEFObjectNew.type = LONG_INT_TYPE;
+			AMEFObjectNew.value = AMEFResources.longToByteArray(lon, 8);
 			length += 9;
 			namedLength += 11;
-			JDBObjectNew.namedLength  = 9;
-			JDBObjectNew.length = 8;
+			AMEFObjectNew.namedLength  = 9;
+			AMEFObjectNew.length = 8;
 		}
-		JDBObjectNew.name = "";		
-		packets.add(JDBObjectNew);		
-		return JDBObjectNew;
+		AMEFObjectNew.name = "";		
+		packets.add(AMEFObjectNew);		
+		return AMEFObjectNew;
 	}
 	
 	/**
@@ -466,11 +466,11 @@ public final class AMEFObject implements Serializable
 	 */
 	public void addPacket(float doub,String name)
 	{
-		AMEFObject JDBObjectNew = addPacket(doub);
-		JDBObjectNew.name = name;
+		AMEFObject AMEFObjectNew = addPacket(doub);
+		AMEFObjectNew.name = name;
 		//length += name.length();
 		namedLength += name.length();
-		JDBObjectNew.namedLength += name.length();
+		AMEFObjectNew.namedLength += name.length();
 	}
 	/**
 	 * @param doub
@@ -478,16 +478,16 @@ public final class AMEFObject implements Serializable
 	 */
 	public AMEFObject addPacket(float doub)
 	{
-		AMEFObject JDBObjectNew = new AMEFObject();
-		JDBObjectNew.type = DOUBLE_FLOAT_TYPE;
-		JDBObjectNew.name = "";
-		JDBObjectNew.length = String.valueOf(doub).length();
-		JDBObjectNew.value = String.valueOf(doub).getBytes();
-		packets.add(JDBObjectNew);
-		length += JDBObjectNew.value.length + 2;
-		namedLength += JDBObjectNew.value.length + 4;
-		JDBObjectNew.namedLength = JDBObjectNew.value.length + 2;
-		return JDBObjectNew;
+		AMEFObject AMEFObjectNew = new AMEFObject();
+		AMEFObjectNew.type = DOUBLE_FLOAT_TYPE;
+		AMEFObjectNew.name = "";
+		AMEFObjectNew.length = String.valueOf(doub).length();
+		AMEFObjectNew.value = String.valueOf(doub).getBytes();
+		packets.add(AMEFObjectNew);
+		length += AMEFObjectNew.value.length + 2;
+		namedLength += AMEFObjectNew.value.length + 4;
+		AMEFObjectNew.namedLength = AMEFObjectNew.value.length + 2;
+		return AMEFObjectNew;
 	}
 	
 	
@@ -498,11 +498,11 @@ public final class AMEFObject implements Serializable
 	 */
 	public void addPacket(double doub,String name)
 	{
-		AMEFObject JDBObjectNew = addPacket(doub);
-		JDBObjectNew.name = name;
+		AMEFObject AMEFObjectNew = addPacket(doub);
+		AMEFObjectNew.name = name;
 		//length += name.length();
 		namedLength += name.length();
-		JDBObjectNew.namedLength += name.length();
+		AMEFObjectNew.namedLength += name.length();
 	}
 	/**
 	 * @param doub
@@ -510,16 +510,16 @@ public final class AMEFObject implements Serializable
 	 */
 	public AMEFObject addPacket(double doub)
 	{
-		AMEFObject JDBObjectNew = new AMEFObject();
-		JDBObjectNew.type = DOUBLE_FLOAT_TYPE;
-		JDBObjectNew.name = "";
-		JDBObjectNew.length = String.valueOf(doub).length();
-		JDBObjectNew.value = String.valueOf(doub).getBytes();
-		packets.add(JDBObjectNew);
-		length += JDBObjectNew.value.length + 2;
-		namedLength += JDBObjectNew.value.length + 4;
-		JDBObjectNew.namedLength = JDBObjectNew.value.length + 2;
-		return JDBObjectNew;
+		AMEFObject AMEFObjectNew = new AMEFObject();
+		AMEFObjectNew.type = DOUBLE_FLOAT_TYPE;
+		AMEFObjectNew.name = "";
+		AMEFObjectNew.length = String.valueOf(doub).length();
+		AMEFObjectNew.value = String.valueOf(doub).getBytes();
+		packets.add(AMEFObjectNew);
+		length += AMEFObjectNew.value.length + 2;
+		namedLength += AMEFObjectNew.value.length + 4;
+		AMEFObjectNew.namedLength = AMEFObjectNew.value.length + 2;
+		return AMEFObjectNew;
 	}
 	
 	/**
@@ -529,11 +529,11 @@ public final class AMEFObject implements Serializable
 	 */
 	public void addPacket(int integer,String name)
 	{
-		AMEFObject JDBObjectNew = addPacket(integer);
-		JDBObjectNew.name = name;
+		AMEFObject AMEFObjectNew = addPacket(integer);
+		AMEFObjectNew.name = name;
 		//length += name.length();
 		namedLength += name.length();
-		JDBObjectNew.namedLength += name.length();
+		AMEFObjectNew.namedLength += name.length();
 	}
 	/**
 	 * @param integer
@@ -541,46 +541,46 @@ public final class AMEFObject implements Serializable
 	 */
 	public AMEFObject addPacket(int integer)
 	{
-		AMEFObject JDBObjectNew = new AMEFObject();
+		AMEFObject AMEFObjectNew = new AMEFObject();
 		if(integer<256)
 		{
-			JDBObjectNew.type = VERY_SMALL_INT_TYPE;
-			JDBObjectNew.value = AMEFResources.intToByteArray(integer, 1);
+			AMEFObjectNew.type = VERY_SMALL_INT_TYPE;
+			AMEFObjectNew.value = AMEFResources.intToByteArray(integer, 1);
 			length += 2;
 			namedLength += 4;
-			JDBObjectNew.namedLength  = 2;
-			JDBObjectNew.length = 1;
+			AMEFObjectNew.namedLength  = 2;
+			AMEFObjectNew.length = 1;
 		}
 		else if(integer<65536)
 		{
-			JDBObjectNew.type = SMALL_INT_TYPE;
-			JDBObjectNew.value = AMEFResources.intToByteArray(integer, 2);
+			AMEFObjectNew.type = SMALL_INT_TYPE;
+			AMEFObjectNew.value = AMEFResources.intToByteArray(integer, 2);
 			length += 3;
 			namedLength += 5;
-			JDBObjectNew.namedLength  = 3;
-			JDBObjectNew.length = 2;
+			AMEFObjectNew.namedLength  = 3;
+			AMEFObjectNew.length = 2;
 		}
 		else if(integer<16777216)
 		{
-			JDBObjectNew.type = BIG_INT_TYPE;
-			JDBObjectNew.value = AMEFResources.intToByteArray(integer, 3);
+			AMEFObjectNew.type = BIG_INT_TYPE;
+			AMEFObjectNew.value = AMEFResources.intToByteArray(integer, 3);
 			length += 4;
 			namedLength += 6;
-			JDBObjectNew.namedLength  = 4;
-			JDBObjectNew.length = 3;
+			AMEFObjectNew.namedLength  = 4;
+			AMEFObjectNew.length = 3;
 		}
 		else
 		{
-			JDBObjectNew.type = INT_TYPE;
-			JDBObjectNew.value = AMEFResources.intToByteArray(integer, 4);
+			AMEFObjectNew.type = INT_TYPE;
+			AMEFObjectNew.value = AMEFResources.intToByteArray(integer, 4);
 			length += 5;
 			namedLength += 7;
-			JDBObjectNew.namedLength  = 5;
-			JDBObjectNew.length = 4;
+			AMEFObjectNew.namedLength  = 5;
+			AMEFObjectNew.length = 4;
 		}
-		JDBObjectNew.name = "";
-		packets.add(JDBObjectNew);		
-		return JDBObjectNew;
+		AMEFObjectNew.name = "";
+		packets.add(AMEFObjectNew);		
+		return AMEFObjectNew;
 	}
 	
 	/**
@@ -590,10 +590,10 @@ public final class AMEFObject implements Serializable
 	 */
 	public void addPacket(Date date,String name)
 	{
-		AMEFObject JDBObjectNew = addPacket(date);
-		JDBObjectNew.name = name;
+		AMEFObject AMEFObjectNew = addPacket(date);
+		AMEFObjectNew.name = name;
 		namedLength += name.length();
-		JDBObjectNew.namedLength += name.length();
+		AMEFObjectNew.namedLength += name.length();
 	}
 	/**
 	 * @param date
@@ -601,24 +601,24 @@ public final class AMEFObject implements Serializable
 	 */
 	public AMEFObject addPacket(Date date)
 	{
-		AMEFObject JDBObjectNew = new AMEFObject();
-		JDBObjectNew.type = DATE_TYPE;
-		JDBObjectNew.name = "";
+		AMEFObject AMEFObjectNew = new AMEFObject();
+		AMEFObjectNew.type = DATE_TYPE;
+		AMEFObjectNew.name = "";
 		SimpleDateFormat format = new SimpleDateFormat("ddMMyyyy HHmmss");
-		JDBObjectNew.length = 15;
-		JDBObjectNew.value = format.format(date).getBytes();
-		JDBObjectNew.namedLength += JDBObjectNew.value.length;
-		length += JDBObjectNew.value.length + 2;
-		namedLength += JDBObjectNew.value.length + 4;
-		JDBObjectNew.namedLength  = JDBObjectNew.value.length + 2;
-		JDBObjectNew.length = JDBObjectNew.value.length;
-		packets.add(JDBObjectNew);
-		return JDBObjectNew;
+		AMEFObjectNew.length = 15;
+		AMEFObjectNew.value = format.format(date).getBytes();
+		AMEFObjectNew.namedLength += AMEFObjectNew.value.length;
+		length += AMEFObjectNew.value.length + 2;
+		namedLength += AMEFObjectNew.value.length + 4;
+		AMEFObjectNew.namedLength  = AMEFObjectNew.value.length + 2;
+		AMEFObjectNew.length = AMEFObjectNew.value.length;
+		packets.add(AMEFObjectNew);
+		return AMEFObjectNew;
 	}
 	
 	/**
 	 * @param packet
-	 * Add a JDBObjectNew property to an Object
+	 * Add a AMEFObjectNew property to an Object
 	 */
 	public void addPacket(AMEFObject packet)
 	{
@@ -646,7 +646,7 @@ public final class AMEFObject implements Serializable
 	
 	/**
 	 * @param packet
-	 * Add a JDBObjectNew property to an Object
+	 * Add a AMEFObjectNew property to an Object
 	 */
 	public void addPacket(byte[] packet,char type)
 	{
@@ -782,6 +782,11 @@ public final class AMEFObject implements Serializable
 		if(type==BOOLEAN_TYPE || type==NULL_BOOL)
 			return true;	
 		return false;
+	}
+	
+	public boolean isBoolean()
+	{
+		return isBoolean(type);
 	}
 	
 	public static boolean isDate(char type)
@@ -1167,10 +1172,14 @@ public final class AMEFObject implements Serializable
 			displ += tab + "Object Value = ";
 			if(obj.isString() || obj.isFloatingPoint() || obj.isDate())
 				displ += obj.getValueStr() + "\n";
+			else if(obj.isBoolean())
+			{
+				displ += (obj.getBooleanValue()?"true":"false") + "\n";
+			}
 			else if(obj.isChar())
 			{
 				if(type==BOOLEAN_TYPE)
-					displ += obj.getBooleanValue() + "\n";
+					displ += (obj.getBooleanValue()?"true":"false") + "\n";
 				else
 					displ += (char)obj.value[0] + "\n";
 			}
@@ -1239,13 +1248,13 @@ public final class AMEFObject implements Serializable
 		}
 		else if(isNumber())
 		{
-			return new Long(getNumericValue()).
-						compareTo(new Long(obj.getNumericValue()));
+			return Long.valueOf(getNumericValue()).
+						compareTo(Long.valueOf(obj.getNumericValue()));
 		}
 		else if(isChar())
 		{
-			return new Character((char)getValue()[0]).
-						compareTo(new Character((char)obj.getValue()[0]));
+			return Character.valueOf((char)getValue()[0]).
+						compareTo(Character.valueOf((char)obj.getValue()[0]));
 		}
 		else if(isFloatingPoint())
 		{
