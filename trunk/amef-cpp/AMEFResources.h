@@ -33,7 +33,7 @@ class AMEFResources
 		encoder = new AMEFEncoder();
 		decoder = new AMEFDecoder();
 	}
-	static AMEFResources *amefResources;
+	static AMEFResources *aMEFResources;
 
 	AMEFEncoder *encoder;
 
@@ -41,11 +41,11 @@ class AMEFResources
 
 	static AMEFResources* get()
 	{
-		if(amefResources==NULL)
+		if(aMEFResources==NULL)
 		{
-			amefResources= new AMEFResources();
+			aMEFResources= new AMEFResources();
 		}
-		return amefResources;
+		return aMEFResources;
 	}
 	~AMEFResources();
 public:

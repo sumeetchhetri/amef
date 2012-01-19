@@ -737,3 +737,4 @@ public:
 ;
 
 #endif /* AMEFENCODER_H_ */
+
