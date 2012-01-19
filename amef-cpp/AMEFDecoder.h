@@ -191,127 +191,127 @@ public:
 
 	AMEFObject decodeSingleAMEFStringPacket(String strdata)
 	{
-		AMEFObject AMEFObject = null;
+		AMEFObject aMEFObject = null;
 		char type = strdata.charAt(0);
 		if(type==AMEFObject::STRING_TYPE)
 		{
-			amefObject = new AMEFObject();
-			amefObject->setType(type);
+			aMEFObject = new AMEFObject();
+			aMEFObject->setType(type);
 			int lengthm = ((strdata.charAt(1) & 0xff) << 24) | ((strdata.charAt(2) & 0xff) << 16)
 							| ((strdata.charAt(3) & 0xff) << 8) | ((strdata.charAt(4) & 0xff));
-			amefObject->setLength(lengthm);
+			aMEFObject->setLength(lengthm);
 			String value = strdata.substring(5,5+lengthm);
-			amefObject->setValue(value,lengthm);
+			aMEFObject->setValue(value,lengthm);
 			tempVal = strdata.substring(5+lengthm);
 		}
 		else if(type==AMEFObject::STRING_65536_TYPE)
 		{
-			amefObject = new AMEFObject();
-			amefObject->setType(type);
+			aMEFObject = new AMEFObject();
+			aMEFObject->setType(type);
 			int lengthm = ((strdata.charAt(1) & 0xff) << 8) | (strdata.charAt(2) & 0xff);
-			amefObject->setLength(lengthm);
+			aMEFObject->setLength(lengthm);
 			String value = strdata.substring(3,3+lengthm);
-			amefObject->setValue(value,lengthm);
+			aMEFObject->setValue(value,lengthm);
 			tempVal = strdata.substring(3+lengthm);
 		}
 		else if(type==AMEFObject::STRING_16777216_TYPE)
 		{
-			amefObject = new AMEFObject();
-			amefObject->setType(type);
+			aMEFObject = new AMEFObject();
+			aMEFObject->setType(type);
 			int lengthm = ((strdata.charAt(1) & 0xff) << 16)
 							| ((strdata.charAt(2) & 0xff) << 8) | (strdata.charAt(3) & 0xff);
-			amefObject->setLength(lengthm);
+			aMEFObject->setLength(lengthm);
 			String value = strdata.substring(3,3+lengthm);
-			amefObject->setValue(value,lengthm);
+			aMEFObject->setValue(value,lengthm);
 			tempVal = strdata.substring(3+lengthm);
 		}
 		else if(type==AMEFObject::DATE_TYPE || type==AMEFObject::STRING_256_TYPE || type==AMEFObject::DOUBLE_FLOAT_TYPE)
 		{
-			amefObject = new AMEFObject();
-			amefObject->setType(type);
+			aMEFObject = new AMEFObject();
+			aMEFObject->setType(type);
 			int lengthm = strdata.charAt(1) & 0xff;
-			amefObject->setLength(lengthm);
+			aMEFObject->setLength(lengthm);
 			String value = strdata.substring(2,2+lengthm);
-			amefObject->setValue(value,lengthm);
+			aMEFObject->setValue(value,lengthm);
 			tempVal = strdata.substring(2+lengthm);
 		}
 		else if(type==AMEFObject::VERY_SMALL_INT_TYPE)
 		{
-			amefObject = new AMEFObject();
-			amefObject->setType(type);
+			aMEFObject = new AMEFObject();
+			aMEFObject->setType(type);
 			String value = (strdata.charAt(1) & 0xff) + "";
-			amefObject->setValue(value,lengthm);
+			aMEFObject->setValue(value,lengthm);
 			tempVal = strdata.substring(2);
 		}
 		else if(type==AMEFObject::SMALL_INT_TYPE)
 		{
-			amefObject = new AMEFObject();
-			amefObject->setType(type);
+			aMEFObject = new AMEFObject();
+			aMEFObject->setType(type);
 			int lengthm = ((strdata.charAt(1) & 0xff) << 8) | ((strdata.charAt(2) & 0xff));
 			String value = lengthm + "";
-			amefObject->setValue(value,lengthm);
+			aMEFObject->setValue(value,lengthm);
 			tempVal = strdata.substring(3);
 		}
 		else if(type==AMEFObject::BIG_INT_TYPE)
 		{
-			amefObject = new AMEFObject();
-			amefObject->setType(type);
+			aMEFObject = new AMEFObject();
+			aMEFObject->setType(type);
 			int lengthm = ((strdata.charAt(1) & 0xff) << 16) | ((strdata.charAt(2) & 0xff) << 8)
 							| ((strdata.charAt(3) & 0xff));
 			String value = lengthm + "";
-			amefObject->setValue(value,lengthm);
+			aMEFObject->setValue(value,lengthm);
 			tempVal = strdata.substring(4);
 		}
 		else if(type==AMEFObject::INT_TYPE)
 		{
-			amefObject = new AMEFObject();
-			amefObject->setType(type);
+			aMEFObject = new AMEFObject();
+			aMEFObject->setType(type);
 			int lengthm = ((strdata.charAt(1) & 0xff) << 24) | ((strdata.charAt(2) & 0xff) << 16)
 							| ((strdata.charAt(3) & 0xff) << 8) | ((strdata.charAt(4) & 0xff));
 			String value = lengthm + "";
-			amefObject->setValue(value,lengthm);
+			aMEFObject->setValue(value,lengthm);
 			tempVal = strdata.substring(5);
 		}
 		else if(type==AMEFObject::VS_LONG_INT_TYPE)
 		{
-			amefObject = new AMEFObject();
-			amefObject->setType(type);
+			aMEFObject = new AMEFObject();
+			aMEFObject->setType(type);
 			long lengthm = ((strdata.charAt(1) & 0xff) << 32) | ((strdata.charAt(2) & 0xff) << 24)
 							| ((strdata.charAt(3) & 0xff) << 16) | ((strdata.charAt(4) & 0xff) << 8)
 							| ((strdata.charAt(5) & 0xff));
 			String value = lengthm + "";
-			amefObject->setValue(value,lengthm);
+			aMEFObject->setValue(value,lengthm);
 			tempVal = strdata.substring(6);
 		}
 		else if(type==AMEFObject::S_LONG_INT_TYPE)
 		{
-			amefObject = new AMEFObject();
-			amefObject->setType(type);
+			aMEFObject = new AMEFObject();
+			aMEFObject->setType(type);
 			long lengthm = ((strdata.charAt(1) & 0xff) << 40) | ((strdata.charAt(2) & 0xff) << 32)
 							| ((strdata.charAt(3) & 0xff) << 24)
 							| ((strdata.charAt(4) & 0xff) << 16) | ((strdata.charAt(5) & 0xff) << 8)
 							| ((strdata.charAt(6) & 0xff));
 			String value = lengthm + "";
-			amefObject->setValue(value,lengthm);
+			aMEFObject->setValue(value,lengthm);
 			tempVal = strdata.substring(7);
 		}
 		else if(type==AMEFObject::B_LONG_INT_TYPE)
 		{
-			amefObject = new AMEFObject();
-			amefObject->setType(type);
+			aMEFObject = new AMEFObject();
+			aMEFObject->setType(type);
 			long lengthm = ((strdata.charAt(1) & 0xff) << 48) | ((strdata.charAt(2) & 0xff) << 40)
 							| ((strdata.charAt(3) & 0xff) << 32)
 							| ((strdata.charAt(4) & 0xff) << 24)
 							| ((strdata.charAt(5) & 0xff) << 16) | ((strdata.charAt(6) & 0xff) << 8)
 							| ((strdata.charAt(7) & 0xff));
 			String value = lengthm + "";
-			amefObject->setValue(value,lengthm);
+			aMEFObject->setValue(value,lengthm);
 			tempVal = strdata.substring(8);
 		}
 		else if(type==AMEFObject::LONG_INT_TYPE)
 		{
-			amefObject = new AMEFObject();
-			amefObject->setType(type);
+			aMEFObject = new AMEFObject();
+			aMEFObject->setType(type);
 			long lengthm = ((strdata.charAt(1) & 0xff) << 56) | ((strdata.charAt(2) & 0xff) << 48)
 							| ((strdata.charAt(3) & 0xff) << 40)
 							| ((strdata.charAt(4) & 0xff) << 32)
@@ -319,77 +319,77 @@ public:
 							| ((strdata.charAt(6) & 0xff) << 16) | ((strdata.charAt(7) & 0xff) << 8)
 							| ((strdata.charAt(8) & 0xff));
 			String value = lengthm + "";
-			amefObject->setValue(value,lengthm);
+			aMEFObject->setValue(value,lengthm);
 			tempVal = strdata.substring(9);
 		}
 		else if(type==AMEFObject::BOOLEAN_TYPE || type==AMEFObject::CHAR_TYPE)
 		{
-			amefObject = new AMEFObject();
-			amefObject->setType(type);
-			amefObject->setLength(1);
+			aMEFObject = new AMEFObject();
+			aMEFObject->setType(type);
+			aMEFObject->setLength(1);
 			String value = strdata.charAt(1)+"";
-			amefObject->setValue(value,lengthm);
+			aMEFObject->setValue(value,lengthm);
 			tempVal = strdata.substring(2);
 		}
 		else if(type==AMEFObject::VS_OBJECT_TYPE)
 		{
-			amefObject = new AMEFObject();
-			amefObject->setType(type);
+			aMEFObject = new AMEFObject();
+			aMEFObject->setType(type);
 			int lengthm = charArrayToInt(strdata.substring(1,2).getchars());
-			amefObject->setLength(lengthm);
+			aMEFObject->setLength(lengthm);
 			tempVal = strdata.substring(2,2+lengthm);
 			while(!tempVal.equals(""))
 			{
 				AMEFObject obj = decodeSingleAMEFStringPacket(tempVal);
-				amefObject->addPacket(obj);
+				aMEFObject->addPacket(obj);
 			}
 			tempVal = strdata.substring(2+lengthm);
 		}
 		else if(type==AMEFObject::S_OBJECT_TYPE)
 		{
-			amefObject = new AMEFObject();
-			amefObject->setType(type);
+			aMEFObject = new AMEFObject();
+			aMEFObject->setType(type);
 			int lengthm = ((strdata.charAt(1) & 0xff) << 8) | ((strdata.charAt(2) & 0xff));
-			amefObject->setLength(lengthm);
+			aMEFObject->setLength(lengthm);
 			tempVal = strdata.substring(3,3+lengthm);
 			while(!tempVal.equals(""))
 			{
 				AMEFObject obj = decodeSingleAMEFStringPacket(tempVal);
-				amefObject->addPacket(obj);
+				aMEFObject->addPacket(obj);
 			}
 			tempVal = strdata.substring(3+lengthm);
 		}
 		else if(type==AMEFObject::B_OBJECT_TYPE)
 		{
-			amefObject = new AMEFObject();
-			amefObject->setType(type);
+			aMEFObject = new AMEFObject();
+			aMEFObject->setType(type);
 			int lengthm = ((strdata.charAt(1) & 0xff) << 16)
 							| ((strdata.charAt(2) & 0xff) << 8) | ((strdata.charAt(3) & 0xff));
-			amefObject->setLength(lengthm);
+			aMEFObject->setLength(lengthm);
 			tempVal = strdata.substring(4,4+lengthm);
 			while(!tempVal.equals(""))
 			{
 				AMEFObject obj = decodeSingleAMEFStringPacket(tempVal);
-				amefObject->addPacket(obj);
+				aMEFObject->addPacket(obj);
 			}
 			tempVal = strdata.substring(4+lengthm);
 		}
 		else if(type==AMEFObject::OBJECT_TYPE)
 		{
-			amefObject = new AMEFObject();
-			amefObject->setType(type);
+			aMEFObject = new AMEFObject();
+			aMEFObject->setType(type);
 			int lengthm = ((strdata.charAt(1) & 0xff) << 24) | ((strdata.charAt(2) & 0xff) << 16)
 							| ((strdata.charAt(3) & 0xff) << 8) | ((strdata.charAt(4) & 0xff));
-			amefObject->setLength(lengthm);
+			aMEFObject->setLength(lengthm);
 			tempVal = strdata.substring(5,5+lengthm);
 			while(!tempVal.equals(""))
 			{
 				AMEFObject obj = decodeSingleAMEFStringPacket(tempVal);
-				amefObject->addPacket(obj);
+				aMEFObject->addPacket(obj);
 			}
 			tempVal = strdata.substring(5+lengthm);
 		}
-		return AMEFObject;
+		return aMEFObject;
 	}
 
 	*//**
@@ -401,14 +401,14 @@ public:
 	 *//*
 	AMEFObject decodeSinglePacket(String strdata,bool ignoreName), UnsupportedEncodingException
 	{
-		AMEFObject AMEFObject = null;
+		AMEFObject aMEFObject = null;
 		char type = strdata.charAt(0);
 		if(type==AMEFObject::STRING_TYPE)
 		{
 			if(strdata.charAt(1)==',')
 			{
-				amefObject = new AMEFObject();
-				amefObject->setType(type);
+				aMEFObject = new AMEFObject();
+				aMEFObject->setType(type);
 				int pos = 2;
 				String name = "";
 				if(!ignoreName)
@@ -426,7 +426,7 @@ public:
 				{
 					throw new AMEFDecodeException("Reached end of AMEF string, not found ,");
 				}
-				amefObject->setName(buffer.substr(st,en-st));}
+				aMEFObject->setName(buffer.substr(st,en-st));}
 				String length = "";
 				if(!ignoreName)pos++;
 				while(length.length()<4)
@@ -443,9 +443,9 @@ public:
 				}
 				int lengthm = ((length.getchars()[0] & 0xff) << 24) | ((length.getchars()[1] & 0xff) << 16)
 								| ((length.getchars()[2] & 0xff) << 8) | ((length.getchars()[3] & 0xff));
-				amefObject->setLength(lengthm);
+				aMEFObject->setLength(lengthm);
 				String value = strdata.substring(pos+1,pos+lengthm+1);
-				amefObject->setValue(value,lengthm);
+				aMEFObject->setValue(value,lengthm);
 				tempVal = strdata.substring(pos+lengthm+1);
 			}
 			else
@@ -457,8 +457,8 @@ public:
 		{
 			if(strdata.charAt(1)==',')
 			{
-				amefObject = new AMEFObject();
-				amefObject->setType(type);
+				aMEFObject = new AMEFObject();
+				aMEFObject->setType(type);
 				int pos = 2;
 				String name = "";
 				if(!ignoreName)
@@ -476,7 +476,7 @@ public:
 				{
 					throw new AMEFDecodeException("Reached end of AMEF string, not found ,");
 				}
-				amefObject->setName(buffer.substr(st,en-st));}
+				aMEFObject->setName(buffer.substr(st,en-st));}
 				String length = "";
 				if(!ignoreName)pos++;
 				while(length.length()<2)
@@ -492,9 +492,9 @@ public:
 					throw new AMEFDecodeException("Reached end of AMEF string, not found ,");
 				}
 				int lengthm = ((length.getchars()[0] & 0xff) << 8) | ((length.getchars()[1] & 0xff));
-				amefObject->setLength(lengthm);
+				aMEFObject->setLength(lengthm);
 				String value = strdata.substring(pos,pos+lengthm);
-				amefObject->setValue(value,lengthm);
+				aMEFObject->setValue(value,lengthm);
 				tempVal = strdata.substring(pos+lengthm);
 			}
 			else
@@ -506,8 +506,8 @@ public:
 		{
 			if(strdata.charAt(1)==',')
 			{
-				amefObject = new AMEFObject();
-				amefObject->setType(type);
+				aMEFObject = new AMEFObject();
+				aMEFObject->setType(type);
 				int pos = 2;
 				String name = "";
 				if(!ignoreName)
@@ -525,7 +525,7 @@ public:
 				{
 					throw new AMEFDecodeException("Reached end of AMEF string, not found ,");
 				}
-				amefObject->setName(buffer.substr(st,en-st));}
+				aMEFObject->setName(buffer.substr(st,en-st));}
 				String length = "";
 				if(!ignoreName)pos++;
 				while(length.length()<3)
@@ -542,9 +542,9 @@ public:
 				}
 				int lengthm = ((length.getchars()[0] & 0xff) << 16) | ((length.getchars()[1] & 0xff) << 8)
 								| ((length.getchars()[2] & 0xff));
-				amefObject->setLength(lengthm);
+				aMEFObject->setLength(lengthm);
 				String value = strdata.substring(pos,pos+lengthm);
-				amefObject->setValue(value,lengthm);
+				aMEFObject->setValue(value,lengthm);
 				tempVal = strdata.substring(pos+lengthm);
 			}
 			else
@@ -556,8 +556,8 @@ public:
 		{
 			if(strdata.charAt(1)==',')
 			{
-				amefObject = new AMEFObject();
-				amefObject->setType(type);
+				aMEFObject = new AMEFObject();
+				aMEFObject->setType(type);
 				int pos = 2;
 				String name = "";
 				if(!ignoreName)
@@ -575,12 +575,12 @@ public:
 				{
 					throw new AMEFDecodeException("Reached end of AMEF string, not found ,");
 				}
-				amefObject->setName(buffer.substr(st,en-st));}
+				aMEFObject->setName(buffer.substr(st,en-st));}
 				if(pos>=strdata.length())
 				{
 					throw new AMEFDecodeException("Reached end of AMEF string, not found ,");
 				}
-				amefObject->setLength(1);
+				aMEFObject->setLength(1);
 				String value = "";
 				if(!ignoreName)
 				{
@@ -592,7 +592,7 @@ public:
 					value = strdata.substring(pos,pos+1);
 					tempVal = strdata.substring(pos+1);
 				}
-				amefObject->setValue(value,lengthm);
+				aMEFObject->setValue(value,lengthm);
 			}
 			else
 			{
@@ -603,8 +603,8 @@ public:
 		{
 			if(strdata.charAt(1)==',')
 			{
-				amefObject = new AMEFObject();
-				amefObject->setType(type);
+				aMEFObject = new AMEFObject();
+				aMEFObject->setType(type);
 				int pos = 2;
 				String name = "";
 				if(!ignoreName)
@@ -622,7 +622,7 @@ public:
 				{
 					throw new AMEFDecodeException("Reached end of AMEF string, not found ,");
 				}
-				amefObject->setName(buffer.substr(st,en-st));}
+				aMEFObject->setName(buffer.substr(st,en-st));}
 				String length = "";
 				if(!ignoreName)pos++;
 				while(length.length()<1)
@@ -638,9 +638,9 @@ public:
 					throw new AMEFDecodeException("Reached end of AMEF string, not found ,");
 				}
 				int lengthm = length.charAt(0) & 0xff;
-				amefObject->setLength(lengthm);
+				aMEFObject->setLength(lengthm);
 				String value = strdata.substring(pos,pos+lengthm);
-				amefObject->setValue(value,lengthm);
+				aMEFObject->setValue(value,lengthm);
 				tempVal = strdata.substring(pos+lengthm);
 			}
 			else
@@ -650,42 +650,42 @@ public:
 		}
 		else if(type==AMEFObject::VERY_SMALL_INT_TYPE)
 		{
-			AMEFObject = getObject(strdata, type, ignoreName, 1);
+			aMEFObject = getObject(strdata, type, ignoreName, 1);
 		}
 		else if(type==AMEFObject::SMALL_INT_TYPE)
 		{
-			AMEFObject = getObject(strdata, type, ignoreName, 2);
+			aMEFObject = getObject(strdata, type, ignoreName, 2);
 		}
 		else if(type==AMEFObject::BIG_INT_TYPE)
 		{
-			AMEFObject = getObject(strdata, type, ignoreName, 3);
+			aMEFObject = getObject(strdata, type, ignoreName, 3);
 		}
 		else if(type==AMEFObject::INT_TYPE)
 		{
-			AMEFObject = getObject(strdata, type, ignoreName, 4);
+			aMEFObject = getObject(strdata, type, ignoreName, 4);
 		}
 		else if(type==AMEFObject::VS_LONG_INT_TYPE)
 		{
-			AMEFObject = getObject(strdata, type, ignoreName, 5);
+			aMEFObject = getObject(strdata, type, ignoreName, 5);
 		}
 		else if(type==AMEFObject::S_LONG_INT_TYPE)
 		{
-			AMEFObject = getObject(strdata, type, ignoreName, 6);
+			aMEFObject = getObject(strdata, type, ignoreName, 6);
 		}
 		else if(type==AMEFObject::B_LONG_INT_TYPE)
 		{
-			AMEFObject = getObject(strdata, type, ignoreName, 7);
+			aMEFObject = getObject(strdata, type, ignoreName, 7);
 		}
 		else if(type==AMEFObject::LONG_INT_TYPE)
 		{
-			AMEFObject = getObject(strdata, type, ignoreName, 8);
+			aMEFObject = getObject(strdata, type, ignoreName, 8);
 		}
 		else if(type==AMEFObject::VS_OBJECT_TYPE)
 		{
 			if(strdata.charAt(1)==',')
 			{
-				amefObject = new AMEFObject();
-				amefObject->setType(type);
+				aMEFObject = new AMEFObject();
+				aMEFObject->setType(type);
 				int pos = 2;
 				String name = "";
 				if(!ignoreName)
@@ -703,7 +703,7 @@ public:
 				{
 					throw new AMEFDecodeException("Reached end of AMEF string, not found ,");
 				}
-				amefObject->setName(buffer.substr(st,en-st));}
+				aMEFObject->setName(buffer.substr(st,en-st));}
 				String length = "";
 				if(!ignoreName)pos++;
 				while(length.length()<1)
@@ -719,14 +719,14 @@ public:
 					throw new AMEFDecodeException("Reached end of AMEF string, not found ,");
 				}
 				int lengthm = ((length.getchars()[0]) & 0xff);
-				amefObject->setLength(lengthm);
+				aMEFObject->setLength(lengthm);
 				//
 				//String value = strdata.substring(pos+1,pos+lengthm+1);
 				tempVal  = strdata.substring(pos,pos+lengthm);
 				while(!tempVal.equals(""))
 				{
 					AMEFObject obj = decodeSinglePacket(tempVal,ignoreName);
-					amefObject->addPacket(obj);
+					aMEFObject->addPacket(obj);
 				}
 				tempVal = strdata.substring(pos+lengthm);
 			}
@@ -739,8 +739,8 @@ public:
 		{
 			if(strdata.charAt(1)==',')
 			{
-				amefObject = new AMEFObject();
-				amefObject->setType(type);
+				aMEFObject = new AMEFObject();
+				aMEFObject->setType(type);
 				int pos = 2;
 				String name = "";
 				if(!ignoreName)
@@ -758,7 +758,7 @@ public:
 				{
 					throw new AMEFDecodeException("Reached end of AMEF string, not found ,");
 				}
-				amefObject->setName(buffer.substr(st,en-st));}
+				aMEFObject->setName(buffer.substr(st,en-st));}
 				String length = "";
 				if(!ignoreName)pos++;
 				while(length.length()<2)
@@ -774,14 +774,14 @@ public:
 					throw new AMEFDecodeException("Reached end of AMEF string, not found ,");
 				}
 				int lengthm = ((length.getchars()[0] & 0xff) << 8) | ((length.getchars()[1]) & 0xff);
-				amefObject->setLength(lengthm);
+				aMEFObject->setLength(lengthm);
 				//String value = strdata.substring(pos+1,pos+lengthm+1);
 				//tempVal = value;
 				tempVal  = strdata.substring(pos,pos+lengthm);
 				while(!tempVal.equals(""))
 				{
 					AMEFObject obj = decodeSinglePacket(tempVal,ignoreName);
-					amefObject->addPacket(obj);
+					aMEFObject->addPacket(obj);
 				}
 				tempVal = strdata.substring(pos+lengthm);
 			}
@@ -794,8 +794,8 @@ public:
 		{
 			if(strdata.charAt(1)==',')
 			{
-				amefObject = new AMEFObject();
-				amefObject->setType(type);
+				aMEFObject = new AMEFObject();
+				aMEFObject->setType(type);
 				int pos = 2;
 				String name = "";
 				if(!ignoreName)
@@ -813,7 +813,7 @@ public:
 				{
 					throw new AMEFDecodeException("Reached end of AMEF string, not found ,");
 				}
-				amefObject->setName(buffer.substr(st,en-st));}
+				aMEFObject->setName(buffer.substr(st,en-st));}
 				String length = "";
 				if(!ignoreName)pos++;
 				while(length.length()<3)
@@ -830,14 +830,14 @@ public:
 				}
 				int lengthm = ((length.getchars()[0] & 0xff) << 16)
 								| ((length.getchars()[1] & 0xff) << 8) | ((length.getchars()[2]) & 0xff);
-				amefObject->setLength(lengthm);
+				aMEFObject->setLength(lengthm);
 				//String value = strdata.substring(pos+1,pos+lengthm+1);
 				//tempVal = value;
 				tempVal  = strdata.substring(pos,pos+lengthm);
 				while(!tempVal.equals(""))
 				{
 					AMEFObject obj = decodeSinglePacket(tempVal,ignoreName);
-					amefObject->addPacket(obj);
+					aMEFObject->addPacket(obj);
 				}
 				tempVal = strdata.substring(pos+lengthm);
 			}
@@ -850,8 +850,8 @@ public:
 		{
 			if(strdata.charAt(1)==',')
 			{
-				amefObject = new AMEFObject();
-				amefObject->setType(type);
+				aMEFObject = new AMEFObject();
+				aMEFObject->setType(type);
 				int pos = 2;
 				String name = "";
 				if(!ignoreName)
@@ -869,7 +869,7 @@ public:
 				{
 					throw new AMEFDecodeException("Reached end of AMEF string, not found ,");
 				}
-				amefObject->setName(buffer.substr(st,en-st));}
+				aMEFObject->setName(buffer.substr(st,en-st));}
 				String length = "";
 				if(!ignoreName)pos++;
 				while(length.length()<4)
@@ -886,14 +886,14 @@ public:
 				}
 				int lengthm = ((length.getchars()[0] & 0xff) << 24) | ((length.getchars()[1] & 0xff) << 16)
 								| ((length.getchars()[2] & 0xff) << 8) | ((length.getchars()[3]) & 0xff);
-				amefObject->setLength(lengthm);
+				aMEFObject->setLength(lengthm);
 				//String value = strdata.substring(pos+1,pos+lengthm+1);
 				//tempVal = value;
 				tempVal  = strdata.substring(pos,pos+lengthm);
 				while(!tempVal.equals(""))
 				{
 					AMEFObject obj = decodeSinglePacket(tempVal,ignoreName);
-					amefObject->addPacket(obj);
+					aMEFObject->addPacket(obj);
 				}
 				tempVal = strdata.substring(pos+lengthm);
 			}
@@ -902,16 +902,16 @@ public:
 				throw new AMEFDecodeException("Invalid character after type specifier, expected ,");
 			}
 		}
-		return AMEFObject;
+		return aMEFObject;
 	}
 
 	AMEFObject getObject(String strdata,char type,bool ignoreName,int typ)
 	{
-		AMEFObject AMEFObject = null;
+		AMEFObject aMEFObject = null;
 		if(strdata.charAt(1)==',')
 		{
-			amefObject = new AMEFObject();
-			amefObject->setType(type);
+			aMEFObject = new AMEFObject();
+			aMEFObject->setType(type);
 			int pos = 2;
 			String name = "";
 			if(!ignoreName)
@@ -929,30 +929,30 @@ public:
 			{
 				throw new AMEFDecodeException("Reached end of AMEF string, not found ,");
 			}
-			amefObject->setName(buffer.substr(st,en-st));}
+			aMEFObject->setName(buffer.substr(st,en-st));}
 			if(!ignoreName)pos++;
 			String value = strdata.substring(pos,pos+typ);
-			amefObject->setValue(value,lengthm);
+			aMEFObject->setValue(value,lengthm);
 			tempVal = strdata.substring(pos+typ);
 		}
 		else
 		{
 			throw new AMEFDecodeException("Invalid character after type specifier, expected ,");
 		}
-		return AMEFObject;
+		return aMEFObject;
 	}*/
 
 	int position;
 	AMEFObject* decodeSinglePacketB(string buffer,bool ignoreName)
 	{
 		char type = (char)buffer[position];
-		AMEFObject *amefObject = NULL;
+		AMEFObject *aMEFObject = NULL;
 		int st, en;
 		if(type==AMEFObject::NULL_STRING || type==AMEFObject::NULL_DATE || type==AMEFObject::NULL_NUMBER
 				|| type==AMEFObject::NULL_BOOL || type==AMEFObject::NULL_CHAR)
 		{
-			amefObject = new AMEFObject();
-			amefObject->setType(type);
+			aMEFObject = new AMEFObject();
+			aMEFObject->setType(type);
 			if(!ignoreName)
 			{
 				while(buffer[position++]!=44){}
@@ -961,15 +961,15 @@ public:
 				en = position - 1;
 				if(en>st){
 
-				amefObject->setName(buffer.substr(st,en-st));}
+				aMEFObject->setName(buffer.substr(st,en-st));}
 			}
 			else
 				position++;
 		}
 		else if(type==AMEFObject::STRING_TYPE)
 		{
-			amefObject = new AMEFObject();
-			amefObject->setType(type);
+			aMEFObject = new AMEFObject();
+			aMEFObject->setType(type);
 			if(!ignoreName)
 			{
 				while(buffer[position++]!=44){}
@@ -978,21 +978,21 @@ public:
 				en = position - 1;
 				if(en>st){
 
-				amefObject->setName(buffer.substr(st,en-st));}
+				aMEFObject->setName(buffer.substr(st,en-st));}
 			}
 			else
 				position++;
 			int lengthm = charArrayToInt(buffer,position,4);
-			amefObject->setLength(lengthm);
+			aMEFObject->setLength(lengthm);
 			position += 4;
 			string value = buffer.substr(position,lengthm);
-			amefObject->setValue(value);
+			aMEFObject->setValue(value);
 			position += 5+lengthm;
 		}
 		else if(type==AMEFObject::STRING_65536_TYPE)
 		{
-			amefObject = new AMEFObject();
-			amefObject->setType(type);
+			aMEFObject = new AMEFObject();
+			aMEFObject->setType(type);
 			if(!ignoreName)
 			{
 				while(buffer[position++]!=44){}
@@ -1001,21 +1001,21 @@ public:
 				en = position - 1;
 				if(en>st){
 
-				amefObject->setName(buffer.substr(st,en-st));}
+				aMEFObject->setName(buffer.substr(st,en-st));}
 			}
 			else
 				position++;
 			int lengthm = charArrayToInt(buffer,position,2);
-			amefObject->setLength(lengthm);
+			aMEFObject->setLength(lengthm);
 			position += 2;
 			string value = buffer.substr(position,lengthm);
-			amefObject->setValue(value);
+			aMEFObject->setValue(value);
 			position += 3+lengthm;
 		}
 		else if(type==AMEFObject::STRING_16777216_TYPE)
 		{
-			amefObject = new AMEFObject();
-			amefObject->setType(type);
+			aMEFObject = new AMEFObject();
+			aMEFObject->setType(type);
 			if(!ignoreName)
 			{
 				while(buffer[position++]!=44){}
@@ -1024,21 +1024,21 @@ public:
 				en = position - 1;
 				if(en>st){
 
-				amefObject->setName(buffer.substr(st,en-st));}
+				aMEFObject->setName(buffer.substr(st,en-st));}
 			}
 			else
 				position++;
 			int lengthm = charArrayToInt(buffer,position,3);
-			amefObject->setLength(lengthm);
+			aMEFObject->setLength(lengthm);
 			position += 3;
 			string value = buffer.substr(position,lengthm);
-			amefObject->setValue(value);
+			aMEFObject->setValue(value);
 			position += 4+lengthm;
 		}
 		else if(type==AMEFObject::DATE_TYPE || type==AMEFObject::STRING_256_TYPE || type==AMEFObject::DOUBLE_FLOAT_TYPE)
 		{
-			amefObject = new AMEFObject();
-			amefObject->setType(type);
+			aMEFObject = new AMEFObject();
+			aMEFObject->setType(type);
 			if(!ignoreName)
 			{
 				while(buffer[position++]!=44){}
@@ -1047,21 +1047,21 @@ public:
 				en = position - 1;
 				if(en>st){
 
-				amefObject->setName(buffer.substr(st,en-st));}
+				aMEFObject->setName(buffer.substr(st,en-st));}
 			}
 			else
 				position++;
 			int lengthm = charArrayToInt(buffer,position,1);
-			amefObject->setLength(lengthm);
+			aMEFObject->setLength(lengthm);
 			position++;
 			string value = buffer.substr(position,lengthm);
-			amefObject->setValue(value);
+			aMEFObject->setValue(value);
 			position += lengthm;
 		}
 		else if(type==AMEFObject::VERY_SMALL_INT_TYPE)
 		{
-			amefObject = new AMEFObject();
-			amefObject->setType(type);
+			aMEFObject = new AMEFObject();
+			aMEFObject->setType(type);
 			if(!ignoreName)
 			{
 				while(buffer[position++]!=44){}
@@ -1070,18 +1070,18 @@ public:
 				en = position - 1;
 				if(en>st){
 
-				amefObject->setName(buffer.substr(st,en-st));}
+				aMEFObject->setName(buffer.substr(st,en-st));}
 			}
 			else
 				position++;
-			amefObject->setLength(1);
-			amefObject->pushChar(buffer[position]);
+			aMEFObject->setLength(1);
+			aMEFObject->pushChar(buffer[position]);
 			position += 1;
 		}
 		else if(type==AMEFObject::SMALL_INT_TYPE)
 		{
-			amefObject = new AMEFObject();
-			amefObject->setType(type);
+			aMEFObject = new AMEFObject();
+			aMEFObject->setType(type);
 			if(!ignoreName)
 			{
 				while(buffer[position++]!=44){}
@@ -1090,19 +1090,19 @@ public:
 				en = position - 1;
 				if(en>st){
 
-				amefObject->setName(buffer.substr(st,en-st));}
+				aMEFObject->setName(buffer.substr(st,en-st));}
 			}
 			else
 				position++;
-			amefObject->setLength(2);
-			amefObject->pushChar(buffer[position]);
-			amefObject->pushChar(buffer[position+1]);
+			aMEFObject->setLength(2);
+			aMEFObject->pushChar(buffer[position]);
+			aMEFObject->pushChar(buffer[position+1]);
 			position += 2;
 		}
 		else if(type==AMEFObject::BIG_INT_TYPE)
 		{
-			amefObject = new AMEFObject();
-			amefObject->setType(type);
+			aMEFObject = new AMEFObject();
+			aMEFObject->setType(type);
 			if(!ignoreName)
 			{
 				while(buffer[position++]!=44){}
@@ -1111,20 +1111,20 @@ public:
 				en = position - 1;
 				if(en>st){
 
-				amefObject->setName(buffer.substr(st,en-st));}
+				aMEFObject->setName(buffer.substr(st,en-st));}
 			}
 			else
 				position++;
-			amefObject->setLength(3);
-			amefObject->pushChar(buffer[position]);
-			amefObject->pushChar(buffer[position+1]);
-			amefObject->pushChar(buffer[position+2]);
+			aMEFObject->setLength(3);
+			aMEFObject->pushChar(buffer[position]);
+			aMEFObject->pushChar(buffer[position+1]);
+			aMEFObject->pushChar(buffer[position+2]);
 			position += 3;
 		}
 		else if(type==AMEFObject::INT_TYPE)
 		{
-			amefObject = new AMEFObject();
-			amefObject->setType(type);
+			aMEFObject = new AMEFObject();
+			aMEFObject->setType(type);
 			if(!ignoreName)
 			{
 				while(buffer[position++]!=44){}
@@ -1133,21 +1133,21 @@ public:
 				en = position - 1;
 				if(en>st){
 
-				amefObject->setName(buffer.substr(st,en-st));}
+				aMEFObject->setName(buffer.substr(st,en-st));}
 			}
 			else
 				position++;
-			amefObject->setLength(4);
-			amefObject->pushChar(buffer[position]);
-			amefObject->pushChar(buffer[position+1]);
-			amefObject->pushChar(buffer[position+2]);
-			amefObject->pushChar(buffer[position+3]);
+			aMEFObject->setLength(4);
+			aMEFObject->pushChar(buffer[position]);
+			aMEFObject->pushChar(buffer[position+1]);
+			aMEFObject->pushChar(buffer[position+2]);
+			aMEFObject->pushChar(buffer[position+3]);
 			position += 4;
 		}
 		else if(type==AMEFObject::VS_LONG_INT_TYPE)
 		{
-			amefObject = new AMEFObject();
-			amefObject->setType(type);
+			aMEFObject = new AMEFObject();
+			aMEFObject->setType(type);
 			if(!ignoreName)
 			{
 				while(buffer[position++]!=44){}
@@ -1156,22 +1156,22 @@ public:
 				en = position - 1;
 				if(en>st){
 
-				amefObject->setName(buffer.substr(st,en-st));}
+				aMEFObject->setName(buffer.substr(st,en-st));}
 			}
 			else
 				position++;
-			amefObject->setLength(5);
-			amefObject->pushChar(buffer[position]);
-			amefObject->pushChar(buffer[position+1]);
-			amefObject->pushChar(buffer[position+2]);
-			amefObject->pushChar(buffer[position+3]);
-			amefObject->pushChar(buffer[position+4]);
+			aMEFObject->setLength(5);
+			aMEFObject->pushChar(buffer[position]);
+			aMEFObject->pushChar(buffer[position+1]);
+			aMEFObject->pushChar(buffer[position+2]);
+			aMEFObject->pushChar(buffer[position+3]);
+			aMEFObject->pushChar(buffer[position+4]);
 			position += 5;
 		}
 		else if(type==AMEFObject::S_LONG_INT_TYPE)
 		{
-			amefObject = new AMEFObject();
-			amefObject->setType(type);
+			aMEFObject = new AMEFObject();
+			aMEFObject->setType(type);
 			if(!ignoreName)
 			{
 				while(buffer[position++]!=44){}
@@ -1180,23 +1180,23 @@ public:
 				en = position - 1;
 				if(en>st){
 
-				amefObject->setName(buffer.substr(st,en-st));}
+				aMEFObject->setName(buffer.substr(st,en-st));}
 			}
 			else
 				position++;
-			amefObject->setLength(6);
-			amefObject->pushChar(buffer[position]);
-			amefObject->pushChar(buffer[position+1]);
-			amefObject->pushChar(buffer[position+2]);
-			amefObject->pushChar(buffer[position+3]);
-			amefObject->pushChar(buffer[position+4]);
-			amefObject->pushChar(buffer[position+5]);
+			aMEFObject->setLength(6);
+			aMEFObject->pushChar(buffer[position]);
+			aMEFObject->pushChar(buffer[position+1]);
+			aMEFObject->pushChar(buffer[position+2]);
+			aMEFObject->pushChar(buffer[position+3]);
+			aMEFObject->pushChar(buffer[position+4]);
+			aMEFObject->pushChar(buffer[position+5]);
 			position += 6;
 		}
 		else if(type==AMEFObject::B_LONG_INT_TYPE)
 		{
-			amefObject = new AMEFObject();
-			amefObject->setType(type);
+			aMEFObject = new AMEFObject();
+			aMEFObject->setType(type);
 			if(!ignoreName)
 			{
 				while(buffer[position++]!=44){}
@@ -1205,24 +1205,24 @@ public:
 				en = position - 1;
 				if(en>st){
 
-				amefObject->setName(buffer.substr(st,en-st));}
+				aMEFObject->setName(buffer.substr(st,en-st));}
 			}
 			else
 				position++;
-			amefObject->setLength(7);
-			amefObject->pushChar(buffer[position]);
-			amefObject->pushChar(buffer[position+1]);
-			amefObject->pushChar(buffer[position+2]);
-			amefObject->pushChar(buffer[position+3]);
-			amefObject->pushChar(buffer[position+4]);
-			amefObject->pushChar(buffer[position+5]);
-			amefObject->pushChar(buffer[position+6]);
+			aMEFObject->setLength(7);
+			aMEFObject->pushChar(buffer[position]);
+			aMEFObject->pushChar(buffer[position+1]);
+			aMEFObject->pushChar(buffer[position+2]);
+			aMEFObject->pushChar(buffer[position+3]);
+			aMEFObject->pushChar(buffer[position+4]);
+			aMEFObject->pushChar(buffer[position+5]);
+			aMEFObject->pushChar(buffer[position+6]);
 			position += 7;
 		}
 		else if(type==AMEFObject::LONG_INT_TYPE)
 		{
-			amefObject = new AMEFObject();
-			amefObject->setType(type);
+			aMEFObject = new AMEFObject();
+			aMEFObject->setType(type);
 			if(!ignoreName)
 			{
 				while(buffer[position++]!=44){}
@@ -1231,25 +1231,25 @@ public:
 				en = position - 1;
 				if(en>st){
 
-				amefObject->setName(buffer.substr(st,en-st));}
+				aMEFObject->setName(buffer.substr(st,en-st));}
 			}
 			else
 				position++;
-			amefObject->setLength(8);
-			amefObject->pushChar(buffer[position]);
-			amefObject->pushChar(buffer[position+1]);
-			amefObject->pushChar(buffer[position+2]);
-			amefObject->pushChar(buffer[position+3]);
-			amefObject->pushChar(buffer[position+4]);
-			amefObject->pushChar(buffer[position+5]);
-			amefObject->pushChar(buffer[position+6]);
-			amefObject->pushChar(buffer[position+7]);
+			aMEFObject->setLength(8);
+			aMEFObject->pushChar(buffer[position]);
+			aMEFObject->pushChar(buffer[position+1]);
+			aMEFObject->pushChar(buffer[position+2]);
+			aMEFObject->pushChar(buffer[position+3]);
+			aMEFObject->pushChar(buffer[position+4]);
+			aMEFObject->pushChar(buffer[position+5]);
+			aMEFObject->pushChar(buffer[position+6]);
+			aMEFObject->pushChar(buffer[position+7]);
 			position += 8;
 		}
 		else if(type==AMEFObject::BOOLEAN_TYPE || type==AMEFObject::CHAR_TYPE)
 		{
-			amefObject = new AMEFObject();
-			amefObject->setType(type);
+			aMEFObject = new AMEFObject();
+			aMEFObject->setType(type);
 			if(!ignoreName)
 			{
 				while(buffer[position++]!=44){}
@@ -1258,18 +1258,18 @@ public:
 				en = position - 1;
 				if(en>st){
 
-				amefObject->setName(buffer.substr(st,en-st));}
+				aMEFObject->setName(buffer.substr(st,en-st));}
 			}
 			else
 				position++;
-			amefObject->setLength(1);
-			amefObject->pushChar(buffer[position]);
+			aMEFObject->setLength(1);
+			aMEFObject->pushChar(buffer[position]);
 			position += 1;
 		}
 		else if(type==AMEFObject::VS_OBJECT_TYPE)
 		{
-			amefObject = new AMEFObject();
-			amefObject->setType(type);
+			aMEFObject = new AMEFObject();
+			aMEFObject->setType(type);
 			if(!ignoreName)
 			{
 				while(buffer[position++]!=44){}
@@ -1278,23 +1278,23 @@ public:
 				en = position - 1;
 				if(en>st){
 
-				amefObject->setName(buffer.substr(st,en-st));}
+				aMEFObject->setName(buffer.substr(st,en-st));}
 			}
 			else
 				position++;
 			int lengthm = charArrayToInt(buffer,position,1);
-			amefObject->setLength(lengthm);
+			aMEFObject->setLength(lengthm);
 			position++;
 			while(position<buffer.length())
 			{
 				AMEFObject *obj = decodeSinglePacketB(buffer,ignoreName);
-				amefObject->addPacket(obj);
+				aMEFObject->addPacket(obj);
 			}
 		}
 		else if(type==AMEFObject::S_OBJECT_TYPE)
 		{
-			amefObject = new AMEFObject();
-			amefObject->setType(type);
+			aMEFObject = new AMEFObject();
+			aMEFObject->setType(type);
 			if(!ignoreName)
 			{
 				while(buffer[position++]!=44){}
@@ -1303,25 +1303,25 @@ public:
 				en = position - 1;
 				if(en>st){
 
-				amefObject->setName(buffer.substr(st,en-st));}
+				aMEFObject->setName(buffer.substr(st,en-st));}
 			}
 			else
 				position++;
 			int lengthm = charArrayToInt(buffer,position,2);
-			amefObject->setLength(lengthm);
+			aMEFObject->setLength(lengthm);
 			//char* value = new char[lengthm];
 			//System.arraycopy(buffer, 3, value, 0, lengthm);
 			position += 2;
 			while(position<buffer.length())
 			{
 				AMEFObject* obj = decodeSinglePacketB(buffer,ignoreName);
-				amefObject->addPacket(obj);
+				aMEFObject->addPacket(obj);
 			}
 		}
 		else if(type==AMEFObject::B_OBJECT_TYPE)
 		{
-			amefObject = new AMEFObject();
-			amefObject->setType(type);
+			aMEFObject = new AMEFObject();
+			aMEFObject->setType(type);
 			if(!ignoreName)
 			{
 				while(buffer[position++]!=44){}
@@ -1330,23 +1330,23 @@ public:
 				en = position - 1;
 				if(en>st){
 
-				amefObject->setName(buffer.substr(st,en-st));}
+				aMEFObject->setName(buffer.substr(st,en-st));}
 			}
 			else
 				position++;
 			int lengthm = charArrayToInt(buffer,position,3);
-			amefObject->setLength(lengthm);
+			aMEFObject->setLength(lengthm);
 			position += 3;
 			while(position<buffer.length())
 			{
 				AMEFObject* obj = decodeSinglePacketB(buffer,ignoreName);
-				amefObject->addPacket(obj);
+				aMEFObject->addPacket(obj);
 			}
 		}
 		else if(type==AMEFObject::OBJECT_TYPE)
 		{
-			amefObject = new AMEFObject();
-			amefObject->setType(type);
+			aMEFObject = new AMEFObject();
+			aMEFObject->setType(type);
 			if(!ignoreName)
 			{
 				while(buffer[position++]!=44){}
@@ -1355,23 +1355,23 @@ public:
 				en = position - 1;
 				if(en>st){
 
-				amefObject->setName(buffer.substr(st,en-st));}
+				aMEFObject->setName(buffer.substr(st,en-st));}
 			}
 			else
 				position++;
 			int lengthm = charArrayToInt(buffer,position,4);
-			amefObject->setLength(lengthm);
+			aMEFObject->setLength(lengthm);
 			position += 4;
 			while(position<buffer.length())
 			{
 				AMEFObject* obj = decodeSinglePacketB(buffer,ignoreName);
-				amefObject->addPacket(obj);
+				aMEFObject->addPacket(obj);
 			}
 		}
-		return amefObject;
+		return aMEFObject;
 	}
 
-	void addPrimitive(AMEFObject* amefObject,string buffer,bool ignoreName)
+	void addPrimitive(AMEFObject* aMEFObject,string buffer,bool ignoreName)
 	{
 		char type = (char)buffer[position];
 		if(type==AMEFObject::NULL_STRING || type==AMEFObject::NULL_DATE || type==AMEFObject::NULL_NUMBER
@@ -1388,7 +1388,7 @@ public:
 			}
 			else
 				position++;
-			if(name=="")amefObject->addNullPacket(type);else amefObject->addNullPacket(type,name);
+			if(name=="")aMEFObject->addNullPacket(type);else aMEFObject->addNullPacket(type,name);
 		}
 		else if(type==AMEFObject::STRING_TYPE)
 		{
@@ -1406,7 +1406,7 @@ public:
 			int lengthm = charArrayToInt(buffer,position,4);
 			position += 4;
 			string value = buffer.substr(position,lengthm);
-			if(name=="")amefObject->addPacket(value);else amefObject->addPacket(value,name);
+			if(name=="")aMEFObject->addPacket(value);else aMEFObject->addPacket(value,name);
 			position += 5+lengthm;
 		}
 		else if(type==AMEFObject::STRING_65536_TYPE)
@@ -1425,7 +1425,7 @@ public:
 			int lengthm = charArrayToInt(buffer,position,2);
 			position += 2;
 			string value = buffer.substr(position,lengthm);
-			if(name=="")amefObject->addPacket(value);else amefObject->addPacket(value,name);
+			if(name=="")aMEFObject->addPacket(value);else aMEFObject->addPacket(value,name);
 			position += 3+lengthm;
 		}
 		else if(type==AMEFObject::STRING_16777216_TYPE)
@@ -1444,7 +1444,7 @@ public:
 			int lengthm = charArrayToInt(buffer,position,3);
 			position += 3;
 			string value = buffer.substr(position,lengthm);
-			if(name=="")amefObject->addPacket(value);else amefObject->addPacket(value,name);
+			if(name=="")aMEFObject->addPacket(value);else aMEFObject->addPacket(value,name);
 			position += 4+lengthm;
 		}
 		else if(type==AMEFObject::DATE_TYPE || type==AMEFObject::STRING_256_TYPE || type==AMEFObject::DOUBLE_FLOAT_TYPE)
@@ -1461,19 +1461,19 @@ public:
 			else
 				position++;
 			int lengthm = charArrayToInt(buffer,position,1);
-			//AMEFObject.setLength(lengthm);
+			//aMEFObject.setLength(lengthm);
 			position++;
 			string value = buffer.substr(position,lengthm);
 			AMEFObject* temp = NULL;
 			if(name=="")
 			{
-				temp = amefObject->addPacket(value);
+				temp = aMEFObject->addPacket(value);
 				temp->setType(type);
 			}
 			else
 			{
-				amefObject->addPacket(value,name);
-				temp = amefObject->getPackets().at(amefObject->getPackets().size()-1);
+				aMEFObject->addPacket(value,name);
+				temp = aMEFObject->getPackets().at(aMEFObject->getPackets().size()-1);
 				temp->setType(type);
 			}
 			position += lengthm;
@@ -1493,7 +1493,7 @@ public:
 				position++;
 			char a[1];
 			a[0] = buffer[position];
-			if(name=="")amefObject->addPacket(charArrayToLong(a,1));else amefObject->addPacket(charArrayToLong(a,1),name);
+			if(name=="")aMEFObject->addPacket(charArrayToLong(a,1));else aMEFObject->addPacket(charArrayToLong(a,1),name);
 			position += 1;
 		}
 		else if(type==AMEFObject::SMALL_INT_TYPE)
@@ -1512,7 +1512,7 @@ public:
 			char a[2];
 			a[0] = buffer[position];
 			a[1] = buffer[position+1];
-			if(name=="")amefObject->addPacket(charArrayToLong(a,2));else amefObject->addPacket(charArrayToLong(a,2),name);
+			if(name=="")aMEFObject->addPacket(charArrayToLong(a,2));else aMEFObject->addPacket(charArrayToLong(a,2),name);
 			position += 2;
 		}
 		else if(type==AMEFObject::BIG_INT_TYPE)
@@ -1532,7 +1532,7 @@ public:
 			a[0] = buffer[position];
 			a[1] = buffer[position+1];
 			a[2] = buffer[position+2];
-			if(name=="")amefObject->addPacket(charArrayToLong(a,3));else amefObject->addPacket(charArrayToLong(a,3),name);
+			if(name=="")aMEFObject->addPacket(charArrayToLong(a,3));else aMEFObject->addPacket(charArrayToLong(a,3),name);
 			position += 3;
 		}
 		else if(type==AMEFObject::INT_TYPE)
@@ -1553,7 +1553,7 @@ public:
 			a[1] = buffer[position+1];
 			a[2] = buffer[position+2];
 			a[3] = buffer[position+3];
-			if(name=="")amefObject->addPacket(charArrayToLong(a,4));else amefObject->addPacket(charArrayToLong(a,4),name);
+			if(name=="")aMEFObject->addPacket(charArrayToLong(a,4));else aMEFObject->addPacket(charArrayToLong(a,4),name);
 			position += 4;
 		}
 		else if(type==AMEFObject::VS_LONG_INT_TYPE)
@@ -1575,7 +1575,7 @@ public:
 			a[2] = buffer[position+2];
 			a[3] = buffer[position+3];
 			a[4] = buffer[position+4];
-			if(name=="")amefObject->addPacket(charArrayToLong(a,5));else amefObject->addPacket(charArrayToLong(a,5),name);
+			if(name=="")aMEFObject->addPacket(charArrayToLong(a,5));else aMEFObject->addPacket(charArrayToLong(a,5),name);
 			position += 5;
 		}
 		else if(type==AMEFObject::S_LONG_INT_TYPE)
@@ -1598,7 +1598,7 @@ public:
 			a[3] = buffer[position+3];
 			a[4] = buffer[position+4];
 			a[5] = buffer[position+5];
-			if(name=="")amefObject->addPacket(charArrayToLong(a,5));else amefObject->addPacket(charArrayToLong(a,6),name);
+			if(name=="")aMEFObject->addPacket(charArrayToLong(a,5));else aMEFObject->addPacket(charArrayToLong(a,6),name);
 			position += 6;
 		}
 		else if(type==AMEFObject::B_LONG_INT_TYPE)
@@ -1622,7 +1622,7 @@ public:
 			a[4] = buffer[position+4];
 			a[5] = buffer[position+5];
 			a[6] = buffer[position+6];
-			if(name=="")amefObject->addPacket(charArrayToLong(a,7));else amefObject->addPacket(charArrayToLong(a,7),name);
+			if(name=="")aMEFObject->addPacket(charArrayToLong(a,7));else aMEFObject->addPacket(charArrayToLong(a,7),name);
 			position += 7;
 		}
 		else if(type==AMEFObject::LONG_INT_TYPE)
@@ -1647,7 +1647,7 @@ public:
 			a[5] = buffer[position+5];
 			a[6] = buffer[position+6];
 			a[7] = buffer[position+7];
-			if(name=="")amefObject->addPacket(charArrayToLong(a,8));else amefObject->addPacket(charArrayToLong(a,8),name);
+			if(name=="")aMEFObject->addPacket(charArrayToLong(a,8));else aMEFObject->addPacket(charArrayToLong(a,8),name);
 			position += 8;
 		}
 		else if(type==AMEFObject::BOOLEAN_TYPE || type==AMEFObject::CHAR_TYPE)
@@ -1664,117 +1664,117 @@ public:
 			else
 				position++;
 			if(type==AMEFObject::BOOLEAN_TYPE)
-				if(name=="")amefObject->addPacket((buffer[position]=='1'?true:false));else amefObject->addPacket((buffer[position]=='1'?true:false));
+				if(name=="")aMEFObject->addPacket((buffer[position]=='1'?true:false));else aMEFObject->addPacket((buffer[position]=='1'?true:false));
 			else
-				if(name=="")amefObject->addPacket(buffer[position]);else amefObject->addPacket(buffer[position]);
+				if(name=="")aMEFObject->addPacket(buffer[position]);else aMEFObject->addPacket(buffer[position]);
 			position += 1;
 		}
-		//AMEFObject.position = position;
+		//aMEFObject.position = position;
 	}
 
 	AMEFObject* decodeSinglePacketBINNew(string buffer,bool ignoreName)
 	{
 		char type = (char)buffer[position];
-		AMEFObject* amefObject = NULL;
+		AMEFObject* aMEFObject = NULL;
 		if(type==AMEFObject::VS_OBJECT_TYPE)
 		{
-			amefObject = new AMEFObject();
-			//AMEFObject.setType(type);
+			aMEFObject = new AMEFObject();
+			//aMEFObject.setType(type);
 			if(!ignoreName)
 			{
 				while(buffer[position++]!=44){}
 				int st = position;
 				while(buffer[position++]!=44){}
 				int en = position - 1;
-				if(en>st){amefObject->setName(buffer.substr(st,en-st));}
+				if(en>st){aMEFObject->setName(buffer.substr(st,en-st));}
 			}
 			else
 				position++;
 			//int lengthm = charArrayToInt(buffer,position,1);
-			//AMEFObject.setLength(lengthm);
+			//aMEFObject.setLength(lengthm);
 			position++;
 			while(position<buffer.length())
 			{
-				addPrimitive(amefObject, buffer,ignoreName);
-				//position = AMEFObject.position;
+				addPrimitive(aMEFObject, buffer,ignoreName);
+				//position = aMEFObject.position;
 			}
 		}
 		else if(type==AMEFObject::S_OBJECT_TYPE)
 		{
-			amefObject = new AMEFObject();
-			//AMEFObject.setType(type);
+			aMEFObject = new AMEFObject();
+			//aMEFObject.setType(type);
 			if(!ignoreName)
 			{
 				while(buffer[position++]!=44){}
 				int st = position;
 				while(buffer[position++]!=44){}
 				int en = position - 1;
-				if(en>st){amefObject->setName(buffer.substr(st,en-st));}
+				if(en>st){aMEFObject->setName(buffer.substr(st,en-st));}
 			}
 			else
 				position++;
 			//int lengthm = charArrayToInt(buffer,position,2);
-			//AMEFObject.setLength(lengthm);
+			//aMEFObject.setLength(lengthm);
 			//byte[] value = new byte[lengthm];
 			//System.arraycopy(buffer, 3, value, 0, lengthm);
 			position += 2;
 			while(position<buffer.length())
 			{
-				addPrimitive(amefObject, buffer,ignoreName);
-				//position = AMEFObject.position;
+				addPrimitive(aMEFObject, buffer,ignoreName);
+				//position = aMEFObject.position;
 			}
 		}
 		else if(type==AMEFObject::B_OBJECT_TYPE)
 		{
-			amefObject = new AMEFObject();
-			//AMEFObject.setType(type);
+			aMEFObject = new AMEFObject();
+			//aMEFObject.setType(type);
 			if(!ignoreName)
 			{
 				while(buffer[position++]!=44){}
 				int st = position;
 				while(buffer[position++]!=44){}
 				int en = position - 1;
-				if(en>st){amefObject->setName(buffer.substr(st,en-st));}
+				if(en>st){aMEFObject->setName(buffer.substr(st,en-st));}
 			}
 			else
 				position++;
 			//int lengthm = charArrayToInt(buffer,position,3);
-			//AMEFObject.setLength(lengthm);
+			//aMEFObject.setLength(lengthm);
 			//byte[] value = new byte[lengthm];
 			//System.arraycopy(buffer, 4, value, 0, lengthm);
 			position += 3;
 			while(position<buffer.length())
 			{
-				addPrimitive(amefObject, buffer,ignoreName);
-				//position = AMEFObject.position;
+				addPrimitive(aMEFObject, buffer,ignoreName);
+				//position = aMEFObject.position;
 			}
 		}
 		else if(type==AMEFObject::OBJECT_TYPE)
 		{
-			amefObject = new AMEFObject();
-			//AMEFObject.setType(type);
+			aMEFObject = new AMEFObject();
+			//aMEFObject.setType(type);
 			if(!ignoreName)
 			{
 				while(buffer[position++]!=44){}
 				int st = position;
 				while(buffer[position++]!=44){}
 				int en = position - 1;
-				if(en>st){amefObject->setName(buffer.substr(st,en-st));}
+				if(en>st){aMEFObject->setName(buffer.substr(st,en-st));}
 			}
 			else
 				position++;
 			//int lengthm = charArrayToInt(buffer,position,4);
-			//AMEFObject.setLength(lengthm);
+			//aMEFObject.setLength(lengthm);
 			//byte[] value = new byte[lengthm];
 			//System.arraycopy(buffer, 5, value, 0, lengthm);
 			position += 4;
 			while(position<buffer.length())
 			{
-				addPrimitive(amefObject, buffer,ignoreName);
-				//position = AMEFObject.position;
+				addPrimitive(aMEFObject, buffer,ignoreName);
+				//position = aMEFObject.position;
 			}
 		}
-		return amefObject;
+		return aMEFObject;
 	}
 
 };

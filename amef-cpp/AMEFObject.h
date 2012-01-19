@@ -1284,3 +1284,4 @@ public:
 
 
 #endif /* AMEFOBJECT_H_ */
+
