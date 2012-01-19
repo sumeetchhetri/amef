@@ -16,10 +16,12 @@ package com.amef;
 */
 
 
+import java.nio.ByteBuffer;
+
 import com.amef.AMEFDecoder;
 import com.amef.AMEFEncoder;
 
-public final class AMEFResources
+public class AMEFResources
 {
 	private AMEFResources()
 	{
@@ -49,12 +51,12 @@ public final class AMEFResources
 	
 	public static AMEFEncoder getEncoder()
 	{
-		return new AMEFEncoder();
+		return get().encoder;
 	}
 	
 	public static AMEFDecoder getDecoder()
 	{
-		return new AMEFDecoder();
+		return get().decoder;
 	}
 	
 	public static byte[] longToByteArray(long l,int ind) 
@@ -101,6 +103,37 @@ public final class AMEFResources
 			ind =3;
 		else
 			ind =4;
+		byte[] result = new byte[ind];
+		for (int i = 0; i<ind; i++)
+		{
+			int offset = (ind - 1 - i) * 8;
+			if(offset>0)
+				result[i] = (byte) ((l >>> offset) & 0xFF);
+			else
+				result[i] = (byte) (l);
+		}
+        return result;
+    }
+	
+	public static byte[] longToByteArrayWI(long l) 
+	{
+		int ind = 1;
+		if(l<256)
+			ind =1;
+		else if(l<65536)
+			ind = 2;
+		else if(l<16777216)
+			ind =3;
+		else if(l<4294967296L)
+			ind =4;
+		else if(l<1099511627776L)
+			ind =5;
+		else if(l<281474976710656L)
+			ind =6;
+		else if(l<72057594037927936L)
+			ind =7;
+		else
+			ind =8;
 		byte[] result = new byte[ind];
 		for (int i = 0; i<ind; i++)
 		{

@@ -1,5 +1,6 @@
 package com.cached;
 
+import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 
@@ -13,11 +14,21 @@ public class JdbNewDR
 		setDone(false);
 		setReaderDone(false);
 		setReadStart(false);
+		buf = ByteBuffer.allocate(1024000);
 	}
-	private ByteBuffer buf = ByteBuffer.allocate(1024000);
+	public JdbNewDR(int alloc)
+	{
+		state = 0;		
+		setDone(false);
+		setReaderDone(false);
+		setReadStart(false);
+		buf = ByteBuffer.allocate(alloc);
+	}
+	private ByteBuffer buf = null;
 	private boolean done = false;
 	private boolean readerDone;
 	private boolean readStart = false;
+	public boolean sockclosed = false;
 	public boolean isReadStart()
 	{
 		return readStart;
@@ -45,6 +56,9 @@ public class JdbNewDR
 			if (chan.read(buf) == -1) 
 			{
 				setDone(true);
+				readerDone = true;
+				sockclosed = true;
+				throw new IOException("");
 			} 
 			else if (buf.remaining() == 0) {
 				//read header
@@ -76,12 +90,15 @@ public class JdbNewDR
 				}
 				buf.limit(((buf.get(0) & 0xff) << 24) | ((buf.get(1) & 0xff) << 16)
 						| ((buf.get(2) & 0xff) << 8) | ((buf.get(3) & 0xff)));
-				System.out.println(buf.limit());
+				//System.out.println(buf.limit());
 				if (state == 1) 
 				{
 					if (chan.read(buf) == -1)
 					{
 						setDone(true);
+						readerDone = true;
+						sockclosed = true;
+						throw new IOException("");
 					} 
 					else if (buf.remaining() == 0) 
 					{
@@ -106,14 +123,27 @@ public class JdbNewDR
 		} 
 		else if (state == 1) 
 		{
-			if (chan.read(buf) == -1) 
+			if (chan.read(buf) == -1)
 			{
 				setDone(true);
+				readerDone = true;
+				sockclosed = true;
+				throw new IOException("");
 			} 
 			else if (buf.remaining() == 0) 
 			{
 				state++;
 				buf.flip();
+				data = new byte[buf.limit()];
+				System.arraycopy(buf.array(), 0, data, 0, data.length);
+				setDone(true);
+			}
+			else if(reader==3)
+			{
+				while(buf.remaining() > 0)
+				{
+					chan.read(buf);
+				}
 				data = new byte[buf.limit()];
 				System.arraycopy(buf.array(), 0, data, 0, data.length);
 				setDone(true);
@@ -132,6 +162,9 @@ public class JdbNewDR
 			if (chan.read(buf) == -1) 
 			{
 				setDone(true);
+				readerDone = true;
+				sockclosed = true;
+				throw new IOException("");
 			} 
 			else if (buf.remaining() == 0) {
 				state++;
@@ -184,11 +217,14 @@ public class JdbNewDR
 				}
 				/*buf.limit(((buf.get(0) & 0xff) << 24) | ((buf.get(1) & 0xff) << 16)
 						| ((buf.get(2) & 0xff) << 8) | ((buf.get(3) & 0xff)));*/
-				if (state == 1) 
+				if (state == 2) 
 				{
 					if (chan.read(buf) == -1)
 					{
 						setDone(true);
+						readerDone = true;
+						sockclosed = true;
+						throw new IOException("");
 					} 
 					else if (buf.remaining() == 0) 
 					{						
@@ -205,6 +241,9 @@ public class JdbNewDR
 							if (chan.read(buf) == -1) 
 							{
 								setDone(true);
+								readerDone = true;
+								sockclosed = true;
+								throw new IOException("");
 							} 
 							else if (buf.remaining() == 0) 
 							{
@@ -232,18 +271,42 @@ public class JdbNewDR
 		} 
 		else if (state == 1) 
 		{
-			if (chan.read(buf) == -1) 
+			if (chan.read(buf) == -1)
 			{
 				setDone(true);
+				readerDone = true;
+				sockclosed = true;
+				throw new IOException("");
 			} 
 			else if (buf.remaining() == 0) 
-			{
-				byte[] data1 = new byte[buf.limit()+cnt.length];
-				System.arraycopy(cnt, 0, data1, 0, data.length);
-				System.arraycopy(buf.array(), 0, data1, cnt.length, data.length);
+			{						
+				byte[] data1 = new byte[buf.limit()];
+				System.arraycopy(buf.array(), 0, data1, 0, data1.length);
+				System.arraycopy(buf.array(), 0, cnt, 1, cnt.length-1);
 				int len = AMEFResources.byteArrayToInt(data1);
-				state++;						
+				state++;	
+				buf.clear();
 				buf.limit(len);
+				
+				if (state == 2) 
+				{
+					if (chan.read(buf) == -1) 
+					{
+						setDone(true);
+						readerDone = true;
+						sockclosed = true;
+						throw new IOException("");
+					} 
+					else if (buf.remaining() == 0) 
+					{
+						state++;
+						buf.flip();
+						data = new byte[buf.limit()+cnt.length];
+						System.arraycopy(cnt, 0, data, 0, cnt.length);
+						System.arraycopy(buf.array(), 0, data, cnt.length, buf.limit());
+						setDone(true);
+					}
+				}
 			}
 			else if(reader==3)
 			{
@@ -261,6 +324,9 @@ public class JdbNewDR
 			if (chan.read(buf) == -1) 
 			{
 				setDone(true);
+				readerDone = true;
+				sockclosed = true;
+				throw new IOException("");
 			} 
 			else if (buf.remaining() == 0) 
 			{
