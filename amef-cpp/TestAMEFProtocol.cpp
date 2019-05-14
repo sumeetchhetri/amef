@@ -31,10 +31,10 @@ int maintest()
 	object2->addPacket('d');
 	object->addPacket(object2);
 	AMEFEncoder encoder;
-	string str = encoder.encodeB(object,false);
+	string str = encoder.encodeB(object);
 	cout << str << flush;
 	AMEFDecoder decoder;
-	AMEFObject *object1 = decoder.decodeB(str,true,false);
+	AMEFObject *object1 = decoder.decodeB(str, false);
 	cout << object1->displayObject("") << flush;
 	return 1;
 }

@@ -15,52 +15,12 @@
 */
 package com.amef;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.nio.ByteBuffer;
-import java.util.Date;
-
 /**
  * @author sumeetc
  * The TestAMEFProtocol Class , to test the AMEF protocol
  */
 public class TestAMEFProtocol
 {
-	static class A
-	{
-		A()
-		{
-			System.out.println("A");
-		}
-		A(int i)
-		{
-			System.out.println("Ai");
-		}
-		private void methodA() throws Exception
-		{
-			System.out.println("methodA");
-		}
-	}
-	
-	static class B extends A
-	{
-		B()
-		{
-			System.out.println("B");
-		}
-		B(int i)
-		{
-			System.out.println("Bi");
-		}
-		public final static void methodA() throws IOException
-		{
-			System.out.println("methodB");
-		}
-	}
 	/**
 	 * @param args
 	 * @throws AMEFEncodeException 
@@ -72,8 +32,8 @@ public class TestAMEFProtocol
 		AMEFObject object = new AMEFObject();
 		object.addNullPacket(AMEFObject.NULL_STRING, "");
 		object.addPacket("asdasD");
-		System.out.println(new String(new AMEFEncoder().encodeWL(object, true)));
-		System.out.println(new AMEFDecoder().decodeB(new AMEFEncoder().encodeWL(object, true), false, true));
+		System.out.println(new String(new AMEFEncoder().encodeWL(object)));
+		System.out.println(new AMEFDecoder().decodeB(new AMEFEncoder().encodeWL(object), false));
 		/*object.addPacket("TransactionCode","NOTIFICATION");
 		object.addPacket("OLC","PublisherApplID");
 		object.addPacket("5","PublisherApplThreadID");
